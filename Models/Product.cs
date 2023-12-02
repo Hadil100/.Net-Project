@@ -14,7 +14,9 @@ namespace MyNewProject.Models
         [Required]
         public int Quantity { get; set; }
 
-        public int CategoryId { get; set; }
+       /// <summary>
+       public int CategoryId { get; set; }
+       /// </summary>
         public Category Category { get; set; }
 
         [Display(Name = "Image :")]

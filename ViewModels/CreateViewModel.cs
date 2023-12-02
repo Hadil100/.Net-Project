@@ -18,7 +18,7 @@ namespace MyNewProject.ViewModels
         public int Quantity { get; set; }
 
         public int CategoryId { get; set; }
-        public Category Category { get; set; }
+
         [Required]
         [Display(Name = "Image :")]
         public IFormFile ImagePath { get; set; }

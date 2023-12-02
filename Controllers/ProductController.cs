@@ -19,10 +19,11 @@ namespace WebApplication2.Controllers
         {
             this.ProductRepository = ProductRepository;
             this.hostingEnvironment = hostingEnvironment;
-            CategoryRepository = categoryRepository;
+            this.CategoryRepository = categoryRepository;
         }
         public ActionResult Index()
         {
+            ViewBag.Categories = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
             var products = ProductRepository.GetAll();
             return View(products);
         }
@@ -37,7 +38,8 @@ namespace WebApplication2.Controllers
 
         // GET: ProductController/Create
         public ActionResult Create()
-        {            ViewBag.CategoryId = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
+        {
+            ViewBag.Categories = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
             return View();
         }
 
@@ -63,7 +65,7 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreateViewModel model)
         {
-            ViewBag.CategoryId = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
+            ViewBag.Categories = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
             if (ModelState.IsValid)
             {
                 string uniqueFileName = null;
@@ -89,6 +91,7 @@ namespace WebApplication2.Controllers
                     Designation = model.Designation,
                     Price = model.Price,
                     Quantity = model.Quantity,
+                    CategoryId = model.CategoryId,
                     // Store the file name in PhotoPath property of the employee object
                     // which gets saved to the Employees database table
                     Image = uniqueFileName
