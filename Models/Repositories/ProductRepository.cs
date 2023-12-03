@@ -44,7 +44,7 @@ namespace MyNewProject.Models.Repositories
             return P;
         }
 
-        public IList<Product> GetProductsBySchoolID(int? CategoryId)
+        public IList<Product> GetProductsByCategoryID(int? CategoryId)
         {
             return context.Products.Where(prod =>
             prod.Id.Equals(CategoryId))

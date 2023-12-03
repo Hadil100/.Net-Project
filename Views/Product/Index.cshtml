@@ -2,6 +2,25 @@
 @{
     ViewBag.Title = "Liste des articles";
 }
+<style>
+
+    .search-container {
+        background-color: rgba(255, 255, 255, 0);
+        padding: 20px; /* Add padding for better visibility */
+        border-radius: 10px; /* Add border-radius for a rounded appearance */
+    }
+</style>
+
+
+<form class="search-container" asp-action="Search" asp-controller="Product">
+    <p>
+        <input size="30" placeholder="tapez un Nom" type="search" name="name" />
+        <!--<select asp-items="ViewBag.Categories" name="schoolid" size=1.5 style="width:300px ; height:30px"></select> -->
+        <select class="form-control" asp-items="ViewBag.Categories"></select>
+
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button>
+    </p>
+</form>
 <div class="card-group">
     @foreach (var product in Model)
     {

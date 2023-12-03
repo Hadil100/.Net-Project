@@ -7,7 +7,7 @@
         Product Add(Product product);
         Product Update(Product product);
         Product Delete(int Id);
-        IList<Product> GetProductsBySchoolID(int? CategoryId);
+        IList<Product> GetProductsByCategoryID(int? CategoryId);
         IList<Product> FindByName(string name);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Hosting.Internal;
@@ -8,6 +9,7 @@ using MyNewProject.ViewModels;
 
 namespace WebApplication2.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
 
     {
@@ -21,6 +23,7 @@ namespace WebApplication2.Controllers
             this.hostingEnvironment = hostingEnvironment;
             this.CategoryRepository = categoryRepository;
         }
+        [AllowAnonymous]
         public ActionResult Index()
         {
             ViewBag.Categories = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
@@ -128,7 +131,7 @@ namespace WebApplication2.Controllers
         // GET: ProductController/Edit/5
         public ActionResult Edit(int id)
         {
-            ViewBag.CategoryId = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
+            ViewBag.Categories = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
             Product product = ProductRepository.Get(id);
             EditViewModel productEditViewModel = new EditViewModel
             {
@@ -147,7 +150,7 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(EditViewModel model)
         {
-            ViewBag.CategoryId = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
+            ViewBag.Categories = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
             // Check if the provided data is valid, if not rerender the edit view
             // so the user can correct and resubmit the edit form
             if (ModelState.IsValid)
@@ -228,6 +231,19 @@ namespace WebApplication2.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult Search(string name, int? ProductId)
+
+        {
+            var result = ProductRepository.GetAll();
+            if (!string.IsNullOrEmpty(name))
+                result = ProductRepository.FindByName(name);
+            else
+            if (ProductId != null)
+                result = ProductRepository.GetProductsByCategoryID(ProductId);
+            ViewBag.Categories = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
+            return View("Index", result);
         }
 
     }
