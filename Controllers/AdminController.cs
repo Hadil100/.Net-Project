@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using MyNewProject.Models.Repositories;
 using MyNewProject.ViewModels;
 using NuGet.ContentModel;
 using System;
@@ -22,6 +24,12 @@ namespace MyNewProject.Controllers
         }
         [HttpGet]
 
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult CreateRole()
         {
             return View();

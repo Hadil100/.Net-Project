@@ -11,8 +11,7 @@ namespace MyNewProject.Controllers
 
         // GET: AccountController
         private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser>
-        signInManager;
+        private readonly SignInManager<IdentityUser> signInManager;
         public AccountController(UserManager<IdentityUser>
         userManager, SignInManager<IdentityUser> signInManager)
         {
@@ -69,44 +68,33 @@ namespace MyNewProject.Controllers
 
         public async Task
 
-        <IActionResult> Login(LoginViewModel model, string? returnUrl
-        )
+        <IActionResult> Login(LoginViewModel model, string? returnUrl)
 
         {
-            if
-            (ModelState.IsValid
-            )
+            
+            if (ModelState.IsValid)
 
             {
                 var result = await signInManager.PasswordSignInAsync
 
                 (model.Email , model.Password, model.RememberMe, false);
-                if
-                (result.Succeeded
-                )
+
+                if(result.Succeeded)
 
                 {
-                    if (!string.IsNullOrEmpty
-
-                    (returnUrl))
+                    if (!string.IsNullOrEmpty (returnUrl))
 
                     {
-                        return LocalRedirect
-
-                        (returnUrl);
+                        return LocalRedirect (returnUrl);
 
                     }
                     else
                     {
-                        return RedirectToAction
-
-                        ("Index", "Home");
+                        return RedirectToAction("Index", "Admin");
 
                     }
                 }
-                ModelState.AddModelError
-
-                (string.Empty,"Invalid Login Attempt  ");
+                ModelState.AddModelError (string.Empty,"Invalid Login Attempt  ");
             
 }
             return View(model);
