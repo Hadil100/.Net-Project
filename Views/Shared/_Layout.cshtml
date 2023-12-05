@@ -9,7 +9,52 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MyNewProject.styles.css" asp-append-version="true" />
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+            margin: 0;
+        }
+
+        .navbar {
+            z-index: 100; /* Set z-index to ensure the navbar is above other elements */
+        }
+
+        .sidenav {
+            width: 130px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: #eee;
+            overflow-x: hidden;
+            padding-top: 60px;
+        }
+
+            .sidenav a {
+                padding: 10px;
+                text-decoration: none;
+                font-size: 16px;
+                color: #000;
+                display: block;
+            }
+
+                .sidenav a:hover {
+                    background-color: #ddd;
+                }
+
+        .main {
+            margin-left: 130px;
+            padding: 10px;
+            margin-top: 60px; /* Adjust margin-top to prevent overlap with navbar */
+        }
+
+        .footer {
+            margin-top: 60px; /* Adjust margin-top to prevent overlap with navbar */
+        }
+    </style>
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -28,7 +73,6 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
-
 
                     <div class="collapse navbar-collapse" id="collapsibleNavbar">
                         <ul class="navbar-nav ml-auto">
@@ -64,11 +108,42 @@
         </nav>
     </header>
 
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="container">
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="sidenav">
+                    <a href="#about">About</a>
+                    <a href="#services">Services</a>
+                    <a href="#clients">Clients</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            }
+            else @if (User.IsInRole("User")){
+                <div class="sidenav">
+                    <a href="#about">hi</a>
+                    <a href="#services">hi</a>
+                    <a href="#clients">Clients</a>
+                    <a href="#contact">hi</a>
+                </div>
+            }
+
+            <div class="main">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    }
 
     <footer class="border-top footer text-muted">
         <div class="container">
@@ -82,3 +157,4 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
