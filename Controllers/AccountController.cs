@@ -170,7 +170,6 @@ namespace MyNewProject.Controllers
             return View(model);
         }
 
-
         [AllowAnonymous]
         [HttpPost]
 
