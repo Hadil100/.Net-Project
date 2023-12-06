@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MyNewProject.styles.css" asp-append-version="true" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI/t1o17HC16hDjG9z3wY+H6/NL+e7BE3Z7Kr9I=" crossorigin="anonymous"></script>
     <style>
         body {
             font-family: "Lato", sans-serif;
@@ -111,16 +112,27 @@
     @if (User.Identity.IsAuthenticated)
     {
         <div class="container">
+            <div class="main">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
             @if (User.IsInRole("Admin"))
             {
                 <div class="sidenav">
-                    <a href="#about">About</a>
+                    <a href="@Url.Action("ListRoles", "Admin")">Users</a>
+                    <a href="#" class="submenu-toggle" data-target="#productsSubMenu">Products</a>
+                    <ul id="productsSubMenu" class="submenu">
+                        <li><a href="@Url.Action("Index", "Product")">Existing Products</a></li>
+                        <li><a href="@Url.Action("Create", "Product")">Create New Product</a></li>
+                    </ul>
                     <a href="#services">Services</a>
                     <a href="#clients">Clients</a>
                     <a href="#contact">Contact</a>
                 </div>
             }
-            else @if (User.IsInRole("User")){
+            else @if (User.IsInRole("User"))
+            {
                 <div class="sidenav">
                     <a href="#about">hi</a>
                     <a href="#services">hi</a>
@@ -128,12 +140,6 @@
                     <a href="#contact">hi</a>
                 </div>
             }
-
-            <div class="main">
-                <main role="main" class="pb-3">
-                    @RenderBody()
-                </main>
-            </div>
         </div>
     }
     else
@@ -150,11 +156,18 @@
             &copy; 2023 - MyNewProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/CustomScript.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Toggle the submenu visibility on "Products" link click
+            $('.submenu-toggle').click(function () {
+                $($(this).data('target')).toggle();
+            });
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-

@@ -66,9 +66,9 @@ namespace MyNewProject.Controllers
         [HttpPost
         ]
 
-        public async Task
+        //public async Task
 
-        <IActionResult> Login(LoginViewModel model, string? returnUrl)
+        /*<IActionResult> Login(LoginViewModel model, string? returnUrl)
 
         {
             
@@ -98,7 +98,38 @@ namespace MyNewProject.Controllers
             
 }
             return View(model);
+        }*/
+
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                if (result.Succeeded)
+                {
+                    var user = await userManager.FindByEmailAsync(model.Email);
+
+                    if (user != null)
+                    {
+                        // Vérifiez si l'utilisateur est dans le rôle "Admin"
+                        if (await userManager.IsInRoleAsync(user, "Admin"))
+                        {
+                            return RedirectToAction("Index", "Admin");
+                        }
+                        // Si l'utilisateur n'est pas dans le rôle "Admin", redirigez-le vers la page "Index" de l'utilisateur
+                        return RedirectToAction("Index", "User");
+                    }
+
+                    // Autre logique de redirection en cas de problème
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+            }
+
+            return View(model);
         }
+
 
         [HttpPost]
 
