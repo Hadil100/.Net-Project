@@ -47,5 +47,10 @@ namespace MyNewProject.Models.Repositories
             Id).Count();
         }
 
+        public Category GetByName(string name)
+        {
+            return context.Categories.Find(name);
+        }
+
     }
 }

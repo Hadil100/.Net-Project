@@ -2,44 +2,46 @@
 @{
     ViewBag.Title = "Liste des articles";
 }
-<style>
 
+<link rel="stylesheet" href="~/css/Research.css" asp-append-version="true" />
+<style>
     .search-container {
         background-color: rgba(255, 255, 255, 0);
-        padding: 20px; /* Add padding for better visibility */
-        border-radius: 10px; /* Add border-radius for a rounded appearance */
+        padding: 20px;
+        border-radius: 10px;
     }
 </style>
-
 
 <form class="search-container" asp-action="Search" asp-controller="Product">
     <p>
         <input size="30" placeholder="tapez un Nom" type="search" name="name" />
-        <!--<select asp-items="ViewBag.Categories" name="schoolid" size=1.5 style="width:300px ; height:30px"></select> -->
         <select class="form-control" asp-items="ViewBag.Categories"></select>
-
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button>
     </p>
 </form>
+
+<div class="d-flex justify-content-between mb-3">
+    <!-- Add a "Create" button -->
+    <a asp-action="Create" asp-controller="Product" class="btn btn-primary">Create</a>
+</div>
+
 <div class="card-group">
     @foreach (var product in Model)
     {
         var photoPath = "~/images/" + (product.Image ?? "noimage.jpg");
-            <div class="card m-3" style="min-width: 18rem; max-width:30.5%;">
-                <div class="card-header">
-                    <h5><b>Designation : </b> @product.Designation</h5>
-                    <h5><b>Price : </b>@product.Price</h5>
-                    <h5><b>Quantity : </b> @product.Quantity</h5>
-                    <h5><b>Category : </b> @product.CategoryId</h5>
-                </div>
-                <img class="card-img-top imageThumbnail" src="@photoPath"
-                     asp-append-version="true" />
-                <div class="card-footer text-center">
-                    <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"
-                       class="btn btn-primary m-1">View</a>
-                    <a asp-action="Edit" asp-controller="Product" class="btn btn-primary m-1" asp-route-id="@product.Id">Edit</a>
-                    <a asp-action="Delete" asp-controller="Product" class="btn btn-danger m-1" asp-route-id="@product.Id">Delete</a>
-                </div>
+        <div class="card m-3" style="min-width: 18rem; max-width:30.5%;">
+            <div class="card-header">
+                <h5><b>Designation : </b> @product.Designation</h5>
+                <h5><b>Price : </b>@product.Price</h5>
+                <h5><b>Quantity : </b> @product.Quantity</h5>
+                <h5><b>Category : </b> @product.CategoryId</h5>
             </div>
+            <img class="card-img-top imageThumbnail" src="@photoPath" asp-append-version="true" />
+            <div class="card-footer text-center">
+                <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="btn btn-primary m-1">View</a>
+                <a asp-action="Edit" asp-controller="Product" class="btn btn-primary m-1" asp-route-id="@product.Id">Edit</a>
+                <a asp-action="Delete" asp-controller="Product" class="btn btn-danger m-1" asp-route-id="@product.Id">Delete</a>
+            </div>
+        </div>
     }
 </div>
