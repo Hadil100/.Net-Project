@@ -1,4 +1,70 @@
 ﻿@model MyNewProject.ViewModels.CartViewModel
+<style>
+    body {
+        background-color: #ffe6ff; /* Light pink color for the entire body */
+        height: 100vh;
+        margin: 0;
+    }
+
+    h2 {
+        color: #8B008B; /* Dark pink color for the heading */
+        font-style: italic;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: white; /* Add this line to set the background color of the table */
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #8B008B; /* Dark pink color for header background */
+        color: black;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f2f2f2; /* Light gray background for even rows */
+    }
+
+    tfoot {
+        background-color: #8B008B; /* Dark pink color for footer background */
+        color: white;
+    }
+
+    p {
+        color: #8B008B; /* Dark pink color for the empty cart message */
+    }
+
+    a {
+        color: #8B008B; /* Dark pink color for links */
+        text-decoration: none;
+    }
+
+        a:hover {
+            text-decoration: underline; /* Underline links on hover */
+        }
+
+    .btn-research {
+        background-color: #8B008B; /* Dark pink color for the button */
+        color: white;
+        padding: 10px 20px; /* Adjust padding for better appearance */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .btn-research:hover {
+            background-color: #6a005f; /* Darken the color on hover if needed */
+        }
+
+</style>
 
 <h2>Your Shopping Cart</h2>
 
@@ -20,10 +86,7 @@
             {
                 var photoPath = "~/images/" + (item.ProductPath ?? "noimage.jpg");
                 <tr>
-
-                    
-                    <td><img src="@photoPath" width="360" height="360" /></td>
-
+                    <td><img src="@Url.Content(photoPath)" width="100" height="100" /></td>
                     <td>@item.ProductName</td>
                     <td>@(item.Price.ToString("C", new System.Globalization.CultureInfo("fr-TN")))</td>
                     <td>@item.Quantity</td>
@@ -36,19 +99,17 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="3">Total</td>
-                <td>@(Model.TotalPrice.ToString("C", new System.Globalization.CultureInfo("fr-TN")))</td>
-                <td>
-                    <a asp-action="ClearCart">Clear Cart</a>
-                </td>
+                <td colspan="4">Total:</td> <!-- Empty cell to match structure -->
+                <td colspan="2"> @(Model.TotalPrice.ToString("C", new System.Globalization.CultureInfo("fr-TN")))</td>
             </tr>
         </tfoot>
     </table>
-
 }
 else
 {
     <p>Your cart is empty.</p>
 }
 
-<a asp-controller="User" asp-action="Index">Continue Shopping</a>
+<button class="btn btn-research" onclick="location.href='@Url.Action("Index", "User")'">Continue Shopping</button>
+<a class="btn btn-research" asp-action="ClearCart">Clear Cart</a>
+<button class="btn btn-research">Next</button>
