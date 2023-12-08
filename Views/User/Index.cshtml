@@ -1,5 +1,75 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<Product>
 @{
+	ViewData["Title"] = "Home Page";
 }
+<link rel="stylesheet" href="~/css/Research.css" asp-append-version="true" />
+<style>
+	body {
+		background-color: #ffc0cb; /* Light pink color for the entire body */
+		height: 100vh;
+		margin: 0;
+	}
+
+	.text-center {
+		color: white; /* Set text color to be visible against the background */
+	}
+
+	.search-container {
+		background-color: rgba(255, 255, 255, 0);
+		padding: 20px; /* Add padding for better visibility */
+		border-radius: 10px; /* Add border-radius for a rounded appearance */
+	}
+
+	.product-container {
+		background-color: rgba(255, 255, 255, 0.8);
+		padding: 20px;
+		border-radius: 10px;
+		margin-top: 20px;
+	}
+
+		.product-container h2 {
+			color: #8B008B; /* Very dark pink color for the h2 */
+		}
+
+	.btn-research {
+		background-color: #8B008B; /* Dark pink color for the button */
+		color: white;
+	}
+</style>
+
+<div class="text-center">
+	<h1 class="display-4" style="font-style: italic;">Welcome to HC</h1>
+</div>
+
+<form class="search-container" asp-action="Search" asp-controller="Product">
+	<div class="d-flex align-items-center">
+		<input size="30" placeholder="Search by Category" type="search" name="name" class="mr-2" />
+		<select class="form-control mr-2" asp-items="ViewBag.Categories"></select>
+		<button class="btn btn-research my-2 my-sm-0" type="submit">Research</button>
+
+	</div>
+</form>
+
+<div class="product-container">
+	<h2 class="text-center">Buy Our Products</h2>
+
+	<div class="card-group">
+		@foreach (var product in Model)
+		{
+			var photoPath = "~/images/" + (product.Image ?? "noimage.jpg");
+			<div class="card m-3" style="min-width: 18rem; max-width:30.5%;">
+				<div class="card-header">
+					<h5><b>Designation : </b> @product.Designation</h5>
+					<h5><b>Price : </b>@product.Price</h5>
+					<h5><b>Quantity : </b> @product.Quantity</h5>
+					<h5><b>Category : </b> @product.CategoryId</h5>
+				</div>
+				<img class="card-img-top imageThumbnail" src="@photoPath" asp-append-version="true" />
+				<div class="card-footer text-center">
+					<a asp-controller="User" asp-action="ShoppingCard" class="btn btn-primary m-1">Add to Card</a>
+					<a asp-controller="User" asp-action="Favorites" class="btn btn-primary m-1">Like</a>
+				</div>
+			</div>
+		}
+	</div>
+</div>

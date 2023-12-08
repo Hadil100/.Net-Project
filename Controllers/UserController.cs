@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyNewProject.Models.Repositories;
 using System.Data;
 
 namespace MyNewProject.Controllers
@@ -9,9 +10,21 @@ namespace MyNewProject.Controllers
     public class UserController : Controller
     {
         // GET: UserController
+        private readonly IProductRepository ProductRepository;
+        private readonly ICategoryRepository CategoryRepository;
+        /*private readonly IFavoritesRepository _favoritesRepository;*/
+
+        public UserController(IProductRepository productRepository, ICategoryRepository categoryRepository)
+        {
+            /*_favoritesRepository = favoritesRepository;*/
+            ProductRepository = productRepository;
+            this.CategoryRepository = categoryRepository;
+        }
+        // GET: UserController
         public ActionResult Index()
         {
-            return View();
+            var products = ProductRepository.GetAll();
+            return View(products);
         }
 
         // GET: UserController/Details/5
@@ -82,5 +95,21 @@ namespace MyNewProject.Controllers
                 return View();
             }
         }
+        /*[HttpPost]
+        public IActionResult AddToFavorites(int productId)
+        {
+            
+            var userId = "user123"; 
+
+           
+            if (!_favoritesRepository.IsProductInFavorites(userId, productId))
+            {
+                
+                _favoritesRepository.AddToFavorites(userId, productId);
+            }
+
+           
+            return RedirectToAction("Details", "Product", new { id = productId });
+        }*/
     }
 }

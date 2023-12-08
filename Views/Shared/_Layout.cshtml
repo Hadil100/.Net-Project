@@ -139,10 +139,9 @@
             else @if (User.IsInRole("User"))
             {
                 <div class="sidenav">
-                    <a href="#about">hi</a>
-                    <a href="#services">hi</a>
-                    <a href="#clients">Clients</a>
-                    <a href="#contact">hi</a>
+                    <a href="@Url.Action("User", "Favorites")">Favorites</a>
+                    <a href="@Url.Action("User", "ShoppingCard")">Shopping Card</a>
+                    <a href="#clients">Commands</a>
                 </div>
             }
         </div>
