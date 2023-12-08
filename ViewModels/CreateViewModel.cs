@@ -11,16 +11,16 @@ namespace MyNewProject.ViewModels
         [StringLength(50, MinimumLength = 5)]
         public string Designation { get; set; }
         [Required]
-        [Display(Name = "Prix en dinar :")]
+        [Display(Name = "Price en dinar :")]
         public float Price { get; set; }
         [Required]
-        [Display(Name = "Quantité en unité :")]
+        [Display(Name = "Quantity :")]
         public int Quantity { get; set; }
 
         public int CategoryId { get; set; }
 
         [Required]
-        [Display(Name = "Image :")]
+        [Display(Name = "")]
         public IFormFile ImagePath { get; set; }
     }
 }

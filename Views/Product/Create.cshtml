@@ -4,67 +4,156 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<style>
+    body {
+        background: url(https://monkeyplusbc.com/assets/imags/blogs/ecommerce-transformacion-digital-con-emonkey.jpg);
+        background-attachment: fixed;
+        background-size: cover;
+        margin: 0;
+    }
 
-<h4>Product</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        @*To support file upload set the form element enctype="multipart/form-data" *@
-        <form enctype="multipart/form-data" asp-action="Create">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Designation" class="control-label"></label>
-                <input asp-for="Designation" class="form-control" />
-                <span asp-validation-for="Designation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" />
-                <span asp-validation-for="Quantity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.Categories"></select>
-            </div>
+    #container {
+        background-image: linear-gradient(to top, rgba(205, 156, 242, 0.40) 0%, rgba(246, 255, 255, 0.71) 100%);
+        box-shadow: 0 15px 30px 1px rgba(128, 128, 128, 0.31);
+        text-align: left;
+        border-radius: 5px;
+        margin: 3em auto;
+        background: rgba(255, 255, 255, 0.95);
+        height: auto; /* Set height to auto */
+        width: 480px;
+        padding: 1em;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        top: 0;
+    }
 
-            @* asp-for tag helper is set to "ImagePath" property. "ImagePath" property type is IFormFile so at runtime asp.net core generates file upload
-            control (input type=file)*@
-            <div class="form-group row">
-                <label asp-for="ImagePath" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <div class="custom-file">
-                        <input asp-for="ImagePath" class="form-control custom-file-input">
-                        <label class="custom-file-label">Choose File...</label>
+        #container h2 {
+            background: url(https://static.pexels.com/photos/5782/nature-flowers-vintage-plant.jpg);
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            font-family: 'Playfair Display', serif;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            letter-spacing: 2px;
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        #container p {
+            font-family: 'Farsan', cursive;
+            margin: 4px 0 1.5em 0;
+            font-size: 1.3em;
+            color: #7d7d7d;
+        }
+
+        #container input {
+            width: 420px;
+            display: inline-block;
+            text-align: center;
+            border-radius: 7px;
+            background: #eee;
+            padding: 1em 2em;
+            outline: none;
+            border: none;
+            color: #222;
+            transition: 0.3s linear;
+        }
+
+    ::placeholder {
+        color: #999;
+    }
+
+    #container input:focus {
+        background: rgba(0, 0, 333, 0.10);
+    }
+
+    #container button {
+        background-image: linear-gradient(to left, rgba(255, 146, 202, 0.75) 0%, rgba(145, 149, 251, 0.86) 100%);
+        box-shadow: 0 9px 25px -5px #df91fb;
+        font-family: 'Abel', sans-serif;
+        padding: 0.5em 1.9em;
+        margin-top: 1.5em;
+        border-radius: 7px;
+        font-size: 1.4em;
+        cursor: pointer;
+        color: #FFFFFF;
+        font-size: 1em;
+        outline: none;
+        border: none;
+        transition: 0.3s linear;
+    }
+
+        #container button:hover {
+            transform: translateY(2px);
+        }
+
+        #container button:active {
+            transform: translateY(5px);
+        }
+
+        .custom-file {
+        margin-top: 1em; /* Adjusted margin-top for custom-file */
+        }
+</style>
+
+<div id="container">
+    <h1>Create a new Product</h1>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form enctype="multipart/form-data" asp-action="Create">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Designation" class="control-label">Product Name</label>
+                    <input asp-for="Designation" class="form-control" />
+                    <span asp-validation-for="Designation" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label">Price</label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Quantity" class="control-label">Quantity</label>
+                    <input asp-for="Quantity" class="form-control" />
+                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CategoryId" class="control-label">Category</label>
+                    <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories"></select>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="ImagePath" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <div class="custom-file">
+                            <input asp-for="ImagePath" class="form-control custom-file-input">
+                            <label class="custom-file-label"></label>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+                <div class="form-group">
+                    <button type="submit" value="Create" class="btn btn-primary submit">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-@*@section Scripts {
-@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}*@
-@*This script is required to display the selected file in the file upload element*@
 @section Scripts {
     <script>
         $(document).ready(function () {
-        $('.custom-file-input').on("change", function () {
-        var fileName = $(this).val().split("\\").pop();
-        $(this).next('.custom-file-label').html(fileName);
-        });
+            $('.custom-file-input').on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next('.custom-file-label').html(fileName);
+            });
         });
     </script>
 }

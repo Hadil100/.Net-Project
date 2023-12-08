@@ -80,7 +80,7 @@ namespace MyNewProject.Controllers
 
         {
             // Find the role by Role ID
-            var role = await roleManager.FindByIdAsync(id);
+            var role = await roleManager.FindByNameAsync("User");
             if
             (role == null
             )
@@ -202,6 +202,30 @@ namespace MyNewProject.Controllers
                     UserName = user.UserName
                 };
                 if (await userManager.IsInRoleAsync(user, role.Name))
+                {
+                    userRoleViewModel.IsSelected = true;
+                }
+                else
+                {
+                    userRoleViewModel.IsSelected = false;
+                }
+                model.Add(userRoleViewModel);
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> AddUserInRoleUser()
+        {
+            
+            var model = new List<UserRoleViewModel>();
+            foreach (var user in userManager.Users.ToList())
+            {
+                var userRoleViewModel = new UserRoleViewModel
+                {
+                    UserId = user.Id,
+                    UserName = user.UserName
+                };
+                if (await userManager.IsInRoleAsync(user, "User"))
                 {
                     userRoleViewModel.IsSelected = true;
                 }

@@ -9,5 +9,6 @@ namespace MyNewProject.Models.Repositories
         void Add(Category cat);
         void Edit(Category cat);
         void Delete(Category cat);
+        Category GetByName(string name);
     }
 }

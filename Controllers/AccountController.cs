@@ -6,6 +6,7 @@ using MyNewProject.ViewModels;
 
 namespace MyNewProject.Controllers
 {
+   [Authorize(Roles = "Admin")]
     public class AccountController : Controller
     {
 
@@ -20,12 +21,14 @@ namespace MyNewProject.Controllers
             this.signInManager = signInManager;
 
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
+
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -58,53 +61,53 @@ namespace MyNewProject.Controllers
 
         [HttpGet
 ]
-
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
-        [HttpPost
-        ]
 
-        //public async Task
+        [HttpPost]
 
-        /*<IActionResult> Login(LoginViewModel model, string? returnUrl)
-
-        {
-            
-            if (ModelState.IsValid)
+        /*    public async Task <IActionResult> Login(LoginViewModel model, string? returnUrl)
 
             {
-                var result = await signInManager.PasswordSignInAsync
 
-                (model.Email , model.Password, model.RememberMe, false);
-
-                if(result.Succeeded)
+                if (ModelState.IsValid)
 
                 {
-                    if (!string.IsNullOrEmpty (returnUrl))
+                    var result = await signInManager.PasswordSignInAsync
+
+                    (model.Email , model.Password, model.RememberMe, false);
+
+                    if(result.Succeeded)
 
                     {
-                        return LocalRedirect (returnUrl);
+                        if (!string.IsNullOrEmpty (returnUrl))
 
+                        {
+                            return LocalRedirect (returnUrl);
+
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Admin");
+
+                        }
                     }
-                    else
-                    {
-                        return RedirectToAction("Index", "Admin");
+                    ModelState.AddModelError (string.Empty,"Invalid Login Attempt  ");
 
-                    }
-                }
-                ModelState.AddModelError (string.Empty,"Invalid Login Attempt  ");
-            
-}
-            return View(model);
-        }*/
-
+    }
+                return View(model);
+            }
+      
+        [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+
                 if (result.Succeeded)
                 {
                     var user = await userManager.FindByEmailAsync(model.Email);
@@ -129,8 +132,45 @@ namespace MyNewProject.Controllers
 
             return View(model);
         }
+        */
 
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
+                if (result.Succeeded)
+                {
+                    var user = await userManager.FindByEmailAsync(model.Email);
+
+                    if (user != null)
+                    {
+                        // Vérifiez si l'utilisateur est dans le rôle "Admin"
+                        if (await userManager.IsInRoleAsync(user, "Admin"))
+                        {
+                            return RedirectToAction("Index", "Admin");
+                        }
+                        // Vérifiez si l'utilisateur est dans le rôle "User"
+                        else if (await userManager.IsInRoleAsync(user, "User"))
+                        {
+                            return RedirectToAction("Index", "User");
+                        }
+                    }
+
+                    // Autre logique de redirection en cas de problème
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+            }
+
+            return View(model);
+        }
+
+        [AllowAnonymous]
         [HttpPost]
 
         public async Task<IActionResult> Logout()
