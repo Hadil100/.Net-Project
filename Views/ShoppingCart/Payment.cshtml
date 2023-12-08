@@ -1,0 +1,85 @@
+﻿@model MyNewProject.ViewModels.PaymentViewModel
+
+<h2>Payment Information</h2>
+
+<div id="paymentConfirmationMessage" class="alert alert-success" role="alert"></div>
+
+<form id="paymentForm">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@(item.Price.ToString("C", new System.Globalization.CultureInfo("fr-TN")))</td>
+                    <td>@item.Quantity</td>
+                    <td>@((item.Price * item.Quantity).ToString("C", new System.Globalization.CultureInfo("fr-TN")))</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">Total</td>
+                <td>@(Model.TotalPrice.ToString("C", new System.Globalization.CultureInfo("fr-TN")))</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div>
+        <label for="cardNumber">Card Number:</label>
+        <input type="text" id="cardNumber" name="cardNumber" required />
+    </div>
+
+    <div>
+        <label for="clientName">Client Name:</label>
+        <input type="text" id="clientName" name="clientName" value="@Model.CustomerName" readonly />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Process Payment</button>
+</form>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Supposons que vous ayez une balise div avec l'id "paymentConfirmationMessage" pour afficher le message de confirmation
+            var confirmationMessageDiv = $("#paymentConfirmationMessage");
+
+            // Assurez-vous que la balise div est masquée initialement
+            confirmationMessageDiv.hide();
+
+            // Associez une fonction à la soumission du formulaire
+            $("form").submit(function (e) {
+                e.preventDefault(); // Empêche l'envoi du formulaire par défaut
+
+                // Effectuez une requête AJAX pour traiter le paiement
+                $.ajax({
+                    url: "/ShoppingCart/ProcessPayment",
+                    method: "POST",
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        if (result.success) {
+                            // Affichez la fenêtre de confirmation ici
+                            confirmationMessageDiv.text("Payment successful! Thank you.");
+                            confirmationMessageDiv.show();
+                        } else {
+                            // Affichez un message d'erreur si le paiement a échoué
+                            alert("Payment failed. Please try again.");
+                        }
+                    },
+                    error: function () {
+                        // Gérez les erreurs de la requête AJAX ici
+                        alert("An error occurred. Please try again later.");
+                    }
+                });
+            });
+        });
+    </script>
+}
+

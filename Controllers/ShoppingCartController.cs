@@ -39,4 +39,28 @@ public class ShoppingCartController : Controller
         shoppingRepository.ClearCart();
         return RedirectToAction("Index");
     }
+	public IActionResult Payment()
+	{
+		var cartItems = shoppingRepository.GetCartItems();
+		var totalPrice = cartItems.Sum(item => item.Price * item.Quantity);
+
+		var paymentViewModel = new PaymentViewModel
+		{
+			CartItems = cartItems,
+			TotalPrice = totalPrice
+		};
+
+		return View(paymentViewModel);
+	}
+
+    public IActionResult ProcessPayment(string cardNumber)
+    {
+        shoppingRepository.ClearCart();
+        var success = true; 
+        return Json(new { success });
+    }
+    public IActionResult PaymentConfirmation()
+    {
+        return View();
+    }
 }
