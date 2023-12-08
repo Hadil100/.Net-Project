@@ -9,6 +9,14 @@ namespace MyNewProject.Controllers
     //[Authorize(Roles = "User")]
     public class UserController : Controller
     {
+        private readonly IProductRepository ProductRepository;
+        private readonly ICategoryRepository CategoryRepository;
+        public UserController(IProductRepository productRepository, ICategoryRepository categoryRepository)
+        {
+            
+            ProductRepository = productRepository;
+            this.CategoryRepository = categoryRepository;
+        }
         // GET: UserController
         private readonly IProductRepository ProductRepository;
         private readonly ICategoryRepository CategoryRepository;

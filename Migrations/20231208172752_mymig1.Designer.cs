@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyNewProject.Models;
 
@@ -11,9 +12,11 @@ using MyNewProject.Models;
 namespace MyNewProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231208172752_mymig1")]
+    partial class mymig1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,22 +231,24 @@ namespace MyNewProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProductName")
+                    b.Property<string>("Designation")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ShoppingCartItemsId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("ShoppingCardItems");
+                    b.HasIndex("ShoppingCartItemsId");
+
+                    b.ToTable("CartItem");
                 });
 
             modelBuilder.Entity("MyNewProject.Models.Category", b =>
@@ -345,6 +350,19 @@ namespace MyNewProject.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("MyNewProject.Models.ShoppingCartItems", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ShoppingCartItems");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -396,6 +414,13 @@ namespace MyNewProject.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MyNewProject.Models.CartItem", b =>
+                {
+                    b.HasOne("MyNewProject.Models.ShoppingCartItems", null)
+                        .WithMany("Items")
+                        .HasForeignKey("ShoppingCartItemsId");
+                });
+
             modelBuilder.Entity("MyNewProject.Models.Product", b =>
                 {
                     b.HasOne("MyNewProject.Models.Category", "Category")
@@ -419,6 +444,11 @@ namespace MyNewProject.Migrations
             modelBuilder.Entity("MyNewProject.Models.Command", b =>
                 {
                     b.Navigation("ProductList");
+                });
+
+            modelBuilder.Entity("MyNewProject.Models.ShoppingCartItems", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

@@ -16,6 +16,7 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<ICommandRepository, CommandRepository>();
+builder.Services.AddScoped<IShoppingRepository, ShoppingRepository>();
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.Configure<IdentityOptions>(options =>
