@@ -17,17 +17,10 @@ namespace MyNewProject.Controllers
             ProductRepository = productRepository;
             this.CategoryRepository = categoryRepository;
         }
-        // GET: UserController
-        private readonly IProductRepository ProductRepository;
-        private readonly ICategoryRepository CategoryRepository;
+       
         /*private readonly IFavoritesRepository _favoritesRepository;*/
 
-        public UserController(IProductRepository productRepository, ICategoryRepository categoryRepository)
-        {
-            /*_favoritesRepository = favoritesRepository;*/
-            ProductRepository = productRepository;
-            this.CategoryRepository = categoryRepository;
-        }
+       
         // GET: UserController
         public ActionResult Index()
         {
