@@ -9,7 +9,7 @@
             this.context = context;
         }
 
-        public void AddItem(int productId, string productName, float price, int quantity)
+        public void AddItem(string productPath, int productId, string productName, float price, int quantity)
         {
             var existingItem = context.ShoppingCardItems.FirstOrDefault(item => item.ProductId == productId);
 
@@ -21,7 +21,7 @@
             {
                 // Vous devez ajouter l'élément au contexte, puis le sauvegarder dans la base de données
                 var newItem = new CartItem
-                {
+                {   ProductPath = productPath,
                     ProductId = productId,
                     ProductName = productName,
                     Price = price,

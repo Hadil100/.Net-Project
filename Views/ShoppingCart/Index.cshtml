@@ -7,6 +7,7 @@
     <table class="table">
         <thead>
             <tr>
+                <th>ProductImage</th>
                 <th>Product</th>
                 <th>Price</th>
                 <th>Quantity</th>
@@ -17,11 +18,16 @@
         <tbody>
             @foreach (var item in Model.CartItems)
             {
+                var photoPath = "~/images/" + (item.ProductPath ?? "noimage.jpg");
                 <tr>
+
+                    
+                    <td><img src="@photoPath" width="360" height="360" /></td>
+
                     <td>@item.ProductName</td>
-                    <td>@item.Price.ToString("C")</td>
+                    <td>@(item.Price.ToString("C", new System.Globalization.CultureInfo("fr-TN")))</td>
                     <td>@item.Quantity</td>
-                    <td>@(item.Price * item.Quantity).ToString("C")</td>
+                    <td>@((item.Price * item.Quantity).ToString("C", new System.Globalization.CultureInfo("fr-TN")))</td>
                     <td>
                         <a asp-action="RemoveFromCart" asp-route-productId="@item.ProductId">Remove</a>
                     </td>
@@ -31,17 +37,18 @@
         <tfoot>
             <tr>
                 <td colspan="3">Total</td>
-                <td>@Model.TotalPrice.ToString("C")</td>
+                <td>@(Model.TotalPrice.ToString("C", new System.Globalization.CultureInfo("fr-TN")))</td>
                 <td>
                     <a asp-action="ClearCart">Clear Cart</a>
                 </td>
             </tr>
         </tfoot>
     </table>
+
 }
 else
 {
     <p>Your cart is empty.</p>
 }
 
-<a asp-action="Index">Continue Shopping</a>
+<a asp-controller="User" asp-action="Index">Continue Shopping</a>

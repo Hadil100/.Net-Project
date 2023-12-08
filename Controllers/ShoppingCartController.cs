@@ -22,9 +22,9 @@ public class ShoppingCartController : Controller
         return View(cartViewModel);
     }
 
-    public IActionResult AddToCart(int productId, string productName, float price, int quantity)
+    public IActionResult AddToCart(string productPath, int productId, string productName, float price, int quantity)
     {
-        shoppingRepository.AddItem(productId, productName, price, quantity);
+        shoppingRepository.AddItem(productPath, productId, productName , price, quantity);
         return RedirectToAction("Index");
     }
 

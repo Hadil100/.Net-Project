@@ -1,4 +1,6 @@
-﻿namespace MyNewProject.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MyNewProject.Models
 {
     public class CartItem
     {
@@ -7,6 +9,9 @@
         public string ProductName { get; set; }
         public float Price { get; set; }
         public int Quantity { get; set; }
+
+        [Display(Name = "Image :")]
+        public string? ProductPath { get; set; }
     }
 
 }
