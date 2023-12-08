@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace MyNewProject.Controllers
 {
+    //[Authorize(Roles = "User")]
     public class UserController : Controller
     {
         // GET: UserController

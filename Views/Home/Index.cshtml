@@ -1,7 +1,8 @@
-﻿@{
+﻿@model IEnumerable<Product>
+@{
     ViewData["Title"] = "Home Page";
 }
-
+<link rel="stylesheet" href="~/css/Research.css" asp-append-version="true" />
 <style>
     body {
         background-image: url('/images/images.jpg');
@@ -9,7 +10,8 @@
         background-position: center;
         background-repeat: no-repeat;
         height: 100vh;
-        margin: 0; /
+        margin: 0;
+        /
     }
 
     .text-center {
@@ -17,7 +19,7 @@
     }
 
     .search-container {
-        background-color: rgba(255, 255, 255, 0); 
+        background-color: rgba(255, 255, 255, 0);
         padding: 20px; /* Add padding for better visibility */
         border-radius: 10px; /* Add border-radius for a rounded appearance */
     }
@@ -26,5 +28,32 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
 
- 
+
+</div>
+
+<form class="search-container" asp-action="Search" asp-controller="Home">
+    <p>
+        <input size="30" placeholder="tapez un Nom" type="search" name="name" />
+        <select class="form-control" asp-items="ViewBag.Categories"></select>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button>
+    </p>
+</form>
+
+<div class="card-group">
+    @foreach (var product in Model)
+    {
+        var photoPath = "~/images/" + (product.Image ?? "noimage.jpg");
+        <div class="card m-3" style="min-width: 5rem; max-width:10.5%;">
+            <div class="card-header">
+                <h5><b>Designation : </b> @product.Designation</h5>
+                <h5><b>Price : </b>@product.Price</h5>
+                <h5><b>Quantity : </b> @product.Quantity</h5>
+                <h5><b>Category : </b> @product.CategoryId</h5>
+            </div>
+            <img class="card-img-top imageThumbnail" src="@photoPath" asp-append-version="true" />
+            <div class="card-footer text-center">
+                <a asp-controller="Account" asp-action="Register" class="btn btn-primary m-1">Buy</a>
+            </div>
+        </div>
+    }
 </div>
