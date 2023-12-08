@@ -75,12 +75,11 @@ namespace MyNewProject.Controllers
             var roles = roleManager.Roles;
             return View(roles);
         }
-        [HttpGet]
         public async Task<IActionResult> EditRole(string id)
 
         {
             // Find the role by Role ID
-            var role = await roleManager.FindByNameAsync("User");
+            var role = await roleManager.FindByIdAsync(id);
             if
             (role == null
             )
@@ -89,9 +88,11 @@ namespace MyNewProject.Controllers
                 ViewBag.ErrorMessage = $"Role with Id = {id} cannot be found"
                 ;
 
-                return View  (     "NotFound  ");
-            
-}
+                return View
+                (
+                "NotFound ");
+
+            }
             var model = new EditRoleViewModel
             {
                 Id = role.Id
@@ -117,7 +118,8 @@ namespace MyNewProject.Controllers
             return View(model);
         }
 
-            [HttpPost]
+
+        [HttpPost]
         public async Task<IActionResult> EditRole (EditRoleViewModel model)
 
         {
@@ -202,30 +204,6 @@ namespace MyNewProject.Controllers
                     UserName = user.UserName
                 };
                 if (await userManager.IsInRoleAsync(user, role.Name))
-                {
-                    userRoleViewModel.IsSelected = true;
-                }
-                else
-                {
-                    userRoleViewModel.IsSelected = false;
-                }
-                model.Add(userRoleViewModel);
-            }
-            return View(model);
-        }
-
-        public async Task<IActionResult> AddUserInRoleUser()
-        {
-            
-            var model = new List<UserRoleViewModel>();
-            foreach (var user in userManager.Users.ToList())
-            {
-                var userRoleViewModel = new UserRoleViewModel
-                {
-                    UserId = user.Id,
-                    UserName = user.UserName
-                };
-                if (await userManager.IsInRoleAsync(user, "User"))
                 {
                     userRoleViewModel.IsSelected = true;
                 }

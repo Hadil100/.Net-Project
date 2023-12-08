@@ -34,6 +34,8 @@ namespace WebApplication2.Controllers
         // GET: ProductController/Details/5
         public ActionResult Details(int id)
         {
+
+            ViewBag.Categories = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
             var product = ProductRepository.Get(id);
 
             return View(product);
@@ -233,15 +235,15 @@ namespace WebApplication2.Controllers
             }
         }
 
-        public ActionResult Search(string name, int? ProductId)
+        public ActionResult Search(string name, int? CategoryId)
 
         {
             var result = ProductRepository.GetAll();
             if (!string.IsNullOrEmpty(name))
                 result = ProductRepository.FindByName(name);
             else
-            if (ProductId != null)
-                result = ProductRepository.GetProductsByCategoryID(ProductId);
+            if (CategoryId != null)
+                result = ProductRepository.GetProductsByCategoryID(CategoryId);
             ViewBag.Categories = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
             return View("Index", result);
         }
