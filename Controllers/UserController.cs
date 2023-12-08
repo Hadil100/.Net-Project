@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyNewProject.Models.Repositories;
 using System.Data;
 
 namespace MyNewProject.Controllers
@@ -8,10 +9,19 @@ namespace MyNewProject.Controllers
     //[Authorize(Roles = "User")]
     public class UserController : Controller
     {
+        private readonly IProductRepository ProductRepository;
+        private readonly ICategoryRepository CategoryRepository;
+        public UserController(IProductRepository productRepository, ICategoryRepository categoryRepository)
+        {
+            
+            ProductRepository = productRepository;
+            this.CategoryRepository = categoryRepository;
+        }
         // GET: UserController
         public ActionResult Index()
         {
-            return View();
+            var products = ProductRepository.GetAll();
+            return View(products);
         }
 
         // GET: UserController/Details/5
