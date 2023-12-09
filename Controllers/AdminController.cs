@@ -12,7 +12,7 @@ using System.Data;
 
 namespace MyNewProject.Controllers
 {
-    [Authorize(Roles = "Admin")]
+   // [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager ;

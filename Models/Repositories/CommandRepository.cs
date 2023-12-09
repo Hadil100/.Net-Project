@@ -25,7 +25,7 @@
             Command c1 = context.Commands.Find(c.CommandId);
             if (c1 != null)
             {
-                c1.ProductList = c.ProductList;
+                c1.CartItems = c.CartItems;
                 c1.Total = c.Total;
                 context.SaveChanges();
             }

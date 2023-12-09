@@ -1,14 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyNewProject.Models;
 using MyNewProject.Models.Repositories;
 using MyNewProject.ViewModels;
+using System.Security.Claims;
 
 public class ShoppingCartController : Controller
 {
     private readonly IShoppingRepository shoppingRepository;
-
-    public ShoppingCartController(IShoppingRepository shoppingRepository)
+    private readonly ICommandRepository commandRepository;
+    public ShoppingCartController(IShoppingRepository shoppingRepository, ICommandRepository commandRepository)
     {
         this.shoppingRepository = shoppingRepository;
+        this.commandRepository = commandRepository;
     }
 
     public IActionResult Index()
@@ -53,12 +56,15 @@ public class ShoppingCartController : Controller
 		return View(paymentViewModel);
 	}
 
-    public IActionResult ProcessPayment(string cardNumber)
+    [HttpPost]
+    
+public IActionResult ProcessPayment(string cardNumber)
     {
         shoppingRepository.ClearCart();
-        var success = true; 
+        var success = true;
         return Json(new { success });
     }
+
     public IActionResult PaymentConfirmation()
     {
         return View();

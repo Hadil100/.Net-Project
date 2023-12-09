@@ -133,15 +133,18 @@
                     <a href="@Url.Action("ListRoles", "Admin")">Users</a>
                     <a href="@Url.Action("Index", "Product")">Product</a>
                     <a href="@Url.Action("Index", "Category")">Categories</a>
-                    <a href="#clients">Commandes</a>
+                    <a href="@Url.Action("Index", "Command")">Commandes</a>
                 </div>
             }
             else @if (User.IsInRole("User"))
             {
                 <div class="sidenav">
                     <a href="@Url.Action("User", "Favorites")">Favorites</a>
-                    <a href="@Url.Action("Index", "ShoppingCart")">Shopping Cart</a>
-                    <a href="#clients">Commands</a>
+
+                    <a href="@Url.Action("Index", "ShoppingCart")">Shopping Card</a>
+                    
+
+
                 </div>
             }
         </div>
