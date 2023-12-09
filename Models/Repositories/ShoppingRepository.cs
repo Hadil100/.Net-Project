@@ -15,7 +15,7 @@
 
             if (existingItem != null)
             {
-                existingItem.Quantity += quantity;
+                existingItem.Quantity += 1;
             }
             else
             {
