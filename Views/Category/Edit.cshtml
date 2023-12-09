@@ -3,10 +3,27 @@
 @{
     ViewData["Title"] = "Edit";
 }
+<style>
+    body {
+        background-color: #ffe6ff; /* Light pink color for the entire body */
+        height: 100vh;
+        margin: 0;
+    }
 
-<h1>Edit</h1>
+    label.control-label {
+        font-weight: bold;
+    }
 
-<h4>Category</h4>
+    .custom-file-input {
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        margin-right: 10px;
+    }
+</style>
+<h1>Edit Category</h1>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -24,7 +41,7 @@
         </form>
     </div>
 </div>
-
+</hr>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

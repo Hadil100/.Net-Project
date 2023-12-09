@@ -4,11 +4,28 @@
     ViewData["Title"] = "Details";
     var photoPath = "~/images/" + (Model.Image ?? "noimage.jpg");
 }
+<style>
+    body {
+        background-color: #ffe6ff; /* Light pink color for the entire body */
+        height: 100vh;
+        margin: 0;
+    }
 
-<h1>Details</h1>
+    label.control-label {
+        font-weight: bold;
+    }
+
+    .custom-file-input {
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        margin-right: 10px;
+    }
+</style>
+<h1>Details of this Product</h1>
 
 <div>
-    <h4>Product</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -46,6 +63,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.Id">Edit</a>
+    <a asp-action="Index" class="btn btn-primary">Back to List</a>
 </div>

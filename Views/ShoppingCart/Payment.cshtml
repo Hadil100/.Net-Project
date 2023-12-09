@@ -215,12 +215,7 @@
             </div>
         </div>
     </div>
-    <a asp-controller="ShoppingCart" asp-action="ProcessPayment"
-       asp-route-CartItems = "@Model.CartItems"
-       asp-route-UserName="@Model.ClientName"
-       asp-route-Total="@Model.TotalPrice"
-       
-       class="btn btn-primary m-1">Processus Payment</a>
+    <button type="submit" class="btn btn-primary">Process Payment</button>
 </form>
 
 @section scripts {

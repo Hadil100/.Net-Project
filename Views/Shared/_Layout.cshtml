@@ -130,7 +130,7 @@
             @if (User.IsInRole("Admin"))
             {
                 <div class="sidenav">
-                    <a href="@Url.Action("", "Admin")">Users</a>
+                    <a href="@Url.Action("ListRoles", "Admin")">Users</a>
                     <a href="@Url.Action("Index", "Product")">Product</a>
                     <a href="@Url.Action("Index", "Category")">Categories</a>
                     <a href="@Url.Action("Index", "Command")">Commandes</a>
@@ -140,8 +140,11 @@
             {
                 <div class="sidenav">
                     <a href="@Url.Action("User", "Favorites")">Favorites</a>
+
                     <a href="@Url.Action("Index", "ShoppingCart")">Shopping Card</a>
                     
+
+
                 </div>
             }
         </div>

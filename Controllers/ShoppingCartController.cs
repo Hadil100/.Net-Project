@@ -57,53 +57,13 @@ public class ShoppingCartController : Controller
 	}
 
     [HttpPost]
-    public IActionResult ProcessPayment(List<CartItem>  CartItems, string UserName, float Total)
-    {
-        try
-        {
-            // Récupérez le nom d'utilisateur de l'utilisateur connecté
-           
-
-            // Créez une nouvelle commande avec les informations nécessaires
-            Command newCommand = new Command
-            {
-                CartItems = CartItems.Select(item => new CartItem
-                {
-                    ProductName = item.ProductName,
-                    Price = item.Price,
-                    Quantity = item.Quantity
-                }).ToList(),
-
-                UserName = UserName,
-                Total = Total,  // Assurez-vous que TotalPrice est correctement défini dans votre PaymentViewModel
-               
-            };
-
-            // Ajoutez la nouvelle commande au contexte
-            commandRepository.Add(newCommand);
-
-            // Enregistrez les modifications dans la base de données
-           
-
-            // Effacez le panier
-            shoppingRepository.ClearCart();
-
-            var success = true;
-            return Json(new { success });
-        }
-        catch (Exception ex)
-        {
-            return Json(new { success = false, errorMessage = ex.Message });
-        }
-    }
-
-  /*
+    
 public IActionResult ProcessPayment(string cardNumber)
     {
         shoppingRepository.ClearCart();
         var success = true;
         return Json(new { success });
-    }*/
+    }
 
     public IActionResult PaymentConfirmation()
     {

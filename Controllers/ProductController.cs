@@ -163,29 +163,19 @@ namespace WebApplication2.Controllers
                 product.Designation = model.Designation;
                 product.Price = model.Price;
                 product.Quantity = model.Quantity;
-                // If the user wants to change the photo, a new photo will be
-                // uploaded and the Photo property on the model object receives
-                // the uploaded photo. If the Photo property is null, user did
-                // not upload a new photo and keeps his existing photo
+               
                 if (model.ImagePath != null)
                 {
-                    // If a new photo is uploaded, the existing photo must be
-                    // deleted. So check if there is an existing photo and delete
-                    if (model.ExistingImagePath != null)
+					// If a new photo is uploaded, the existing photo must be
+					// deleted. So check if there is an existing photo and delete
+					if (model.ExistingImagePath != null)
                     {
-                        string filePath = Path.Combine(hostingEnvironment.WebRootPath, "images", model.ExistingImagePath);
-                        System.IO.File.Delete(filePath);
-                    }
-                    // Save the new photo in wwwroot/images folder and update
-                    // PhotoPath property of the product object which will be
-                    // eventually saved in the database
-                    product.Image = ProcessUploadedFile(model);
-                }
-
-                // Call update method on the repository service passing it the
-
-                // product object to update the data in the database table
-                Product updatedProduct = ProductRepository.Update(product);
+						string filePath = Path.Combine(hostingEnvironment.WebRootPath, "images", model.ExistingImagePath);
+						System.IO.File.Delete(filePath);
+					}
+					product.Image = ProcessUploadedFile(model);
+				}
+				Product updatedProduct = ProductRepository.Update(product);
                 if (updatedProduct != null)
                     return RedirectToAction("Index");
                 else
@@ -210,6 +200,7 @@ namespace WebApplication2.Controllers
             }
             return uniqueFileName;
         }
+
         // GET: ProductController/Delete/5
         public ActionResult Delete(int id)
         {

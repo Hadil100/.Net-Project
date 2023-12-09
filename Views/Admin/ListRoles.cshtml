@@ -3,6 +3,25 @@
 @{
     ViewBag.Title = "All Roles";
 }
+<style>
+    body {
+        background-color: #ffe6ff; /* Light pink color for the entire body */
+        height: 100vh;
+        margin: 0;
+    }
+
+    label.control-label {
+        font-weight: bold;
+    }
+
+    .custom-file-input {
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        margin-right: 10px;
+    }
+</style>
 <h1>All Roles</h1>
 @if (Model.Any())
 {
