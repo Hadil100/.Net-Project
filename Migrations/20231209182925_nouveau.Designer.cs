@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyNewProject.Models;
 
@@ -11,9 +12,11 @@ using MyNewProject.Models;
 namespace MyNewProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231209182925_nouveau")]
+    partial class nouveau
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,9 +231,6 @@ namespace MyNewProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CommandId")
-                        .HasColumnType("int");
-
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
@@ -248,8 +248,6 @@ namespace MyNewProject.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CommandId");
 
                     b.ToTable("ShoppingCardItems");
                 });
@@ -311,10 +309,6 @@ namespace MyNewProject.Migrations
                     b.Property<float>("Total")
                         .HasColumnType("real");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("CommandId");
 
                     b.ToTable("Commands");
@@ -329,6 +323,9 @@ namespace MyNewProject.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CommandId")
                         .HasColumnType("int");
 
                     b.Property<string>("Designation")
@@ -348,6 +345,8 @@ namespace MyNewProject.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("CommandId");
 
                     b.ToTable("Products");
                 });
@@ -403,13 +402,6 @@ namespace MyNewProject.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MyNewProject.Models.CartItem", b =>
-                {
-                    b.HasOne("MyNewProject.Models.Command", null)
-                        .WithMany("ProductList")
-                        .HasForeignKey("CommandId");
-                });
-
             modelBuilder.Entity("MyNewProject.Models.Product", b =>
                 {
                     b.HasOne("MyNewProject.Models.Category", "Category")
@@ -417,6 +409,10 @@ namespace MyNewProject.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("MyNewProject.Models.Command", null)
+                        .WithMany("ProductList")
+                        .HasForeignKey("CommandId");
 
                     b.Navigation("Category");
                 });

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MyNewProject.Models.Repositories;
 using MyNewProject.ViewModels;
 
 namespace MyNewProject.Controllers
@@ -13,13 +14,14 @@ namespace MyNewProject.Controllers
         // GET: AccountController
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
-        public AccountController(UserManager<IdentityUser>
-        userManager, SignInManager<IdentityUser> signInManager)
+        private readonly IShoppingRepository shoppingRepository;
+		public AccountController(UserManager<IdentityUser>
+        userManager, SignInManager<IdentityUser> signInManager, IShoppingRepository shoppingRepository)
         {
 
             this.userManager = userManager;
             this.signInManager = signInManager;
-
+            this.shoppingRepository = shoppingRepository;
         }
         [AllowAnonymous]
         [HttpGet]
@@ -175,7 +177,8 @@ namespace MyNewProject.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            await signInManager.SignOutAsync();
+			shoppingRepository.ClearCart();
+			await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 

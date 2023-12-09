@@ -15,7 +15,7 @@
 
             if (existingItem != null)
             {
-                existingItem.Quantity += quantity;
+                existingItem.Quantity += 1;
             }
             else
             {
@@ -25,13 +25,18 @@
                     ProductId = productId,
                     ProductName = productName,
                     Price = price,
-                    Quantity = quantity
+                    Quantity = 1
                 };
                 context.ShoppingCardItems.Add(newItem);
             }
+			var product = context.Products.FirstOrDefault(p => p.Id == productId);
+			if (product != null && product.Quantity>0)
+			{
+				product.Quantity -= 1;
+			}
 
-            // Sauvegardez les modifications dans la base de données
-            context.SaveChanges();
+			// Sauvegardez les modifications dans la base de données
+			context.SaveChanges();
         }
 
         public void RemoveItem(int productId)
