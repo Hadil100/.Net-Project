@@ -128,33 +128,25 @@ namespace MyNewProject.Controllers
 
             {
                 ViewBag.ErrorMessage = $"Role with Id = {model.Id} cannot be found";
-                return View  ( "NotFoun");
+                return View  ( "NotFound");
             
 }
             else
             {
-                role.Name = model.RoleName
-                ;
+                role.Name = model.RoleName;
 
                 // Update the Role using UpdateAsync
-                var result = await roleManager.UpdateAsync
-                (role);
-
+                var result = await roleManager.UpdateAsync(role);
                 if
-                (result.Succeeded
-                )
+                (result.Succeeded)
 
                 {
-                    return RedirectToAction
-                    (
-                    "ListRoles  ");
+                    return RedirectToAction("ListRoles");
                 
 }
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError
-
-                    ("", error.Description);
+                    ModelState.AddModelError("", error.Description);
 
                 }
                 return View(model);
