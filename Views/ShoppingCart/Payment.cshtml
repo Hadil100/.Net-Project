@@ -1,10 +1,179 @@
 ﻿@model MyNewProject.ViewModels.PaymentViewModel
 
-<h2>Payment Information</h2>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
 
-<div id="paymentConfirmationMessage" class="alert alert-success" role="alert"></div>
+    .container {
+        margin: auto;
+        background: #ffe6ff;
+        padding: 0px;
+        max-width: 800px;
+    }
 
-<form id="paymentForm">
+        .container .card {
+            width: 100%;
+            background: #fff;
+            padding: 0px;
+            margin-bottom: 20px;
+        }
+
+    body {
+        background: #ffe6ff;
+    }
+
+    .btn.btn-primary {
+        background-color: #ddd;
+        color: black;
+        box-shadow: none;
+        border: none;
+        font-size: 20px;
+        width: 100%;
+        height: 100%;
+    }
+
+        .btn.btn-primary:focus {
+            box-shadow: none;
+        }
+
+    .container .card .img-box {
+        width: 90px;
+        height: 50px;
+    }
+
+    .container .card img {
+        width: 100%;
+        object-fit: fill;
+    }
+
+    .container .card .number {
+        font-size: 30px;
+    }
+
+    .container .card-body .btn.btn-primary .fab.fa-cc-paypal {
+        font-size: 32px;
+        color: #3333f7;
+    }
+
+    .fab.fa-cc-amex {
+        color: #1c6acf;
+        font-size: 32px;
+    }
+
+    .fab.fa-cc-mastercard {
+        font-size: 32px;
+        color: red;
+    }
+
+    .fab.fa-cc-discover {
+        font-size: 32px;
+        color: orange;
+    }
+
+    .c-green {
+        color: green;
+    }
+
+    .box {
+        height: 40px;
+        width: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: black;
+    }
+
+    .btn.btn-primary.payment {
+        background-color: #1c6acf;
+        color: white;
+        border-radius: 0px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 24px;
+    }
+
+    .form__div {
+        height: 50px;
+        position: relative;
+        margin-bottom: 24px;
+    }
+
+    .form-control {
+        width: 100%;
+        height: 45px;
+        font-size: 14px;
+        border: 1px solid #DADCE0;
+        border-radius: 0;
+        outline: none;
+        padding: px;
+        background-color: white;
+        z-index: 1;
+        box-shadow: none;
+        margin-bottom: 10px;
+    }
+
+    .form__label {
+        position: absolute;
+        left: 16px;
+        top: 10px;
+        background-color: #fff;
+        color: #80868B;
+        font-size: 16px;
+        transition: .3s;
+        text-transform: uppercase;
+    }
+
+    .form-control:focus + .form__label {
+        top: -8px;
+        left: 12px;
+        color: #1A73E8;
+        font-size: 12px;
+        font-weight: 500;
+        z-index: 10;
+    }
+
+    .form-control:not(:placeholder-shown).form-control:not(:focus) + .form__label {
+        top: -8px;
+        left: 12px;
+        font-size: 12px;
+        font-weight: 500;
+        z-index: 10;
+    }
+
+    .form-control:focus {
+        border: 1.5px solid #1A73E8;
+        box-shadow: none;
+    }
+</style>
+
+<div id="paymentConfirmationMessage" class="alert alert-success" role="alert">
+</div>
+
+<div class="card p-3">
+    <div class="img-box">
+        <img src="https://www.freepnglogos.com/uploads/visa-logo-download-png-21.png" alt="">
+    </div>
+    <div class="number">
+        <label class="fw-bold" for="">**** **** **** 1060</label>
+    </div>
+    <div class="d-flex align-items-center justify-content-between">
+        <small><span class="fw-bold">Expiry date:</span><span>@DateTime.Now.ToString("MM/yy")</span></small>
+        <small><span class="fw-bold"></span><span>@User.Identity.Name</span></small>
+    </div>
+</div>
+
+<form id="paymentForm" style="background-color: white">
+    <div class="col-12 mt-4">
+        <div class="card p-3">
+            <p class="mb-0 fw-bold h4">Payment Information</p>
+        </div>
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -32,49 +201,44 @@
             </tr>
         </tfoot>
     </table>
-
-    <div>
-        <label for="cardNumber">Card Number:</label>
-        <input type="text" id="cardNumber" name="cardNumber" required />
+    <div class="row">
+        <div class="col-12">
+            <div class="form__div">
+                <label for="cardNumber">*Card Number:</label>
+                <input type="text" class="form-control" id="cardNumber" name="cardNumber" required />
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form__div">
+                <label for="clientName">*Client Name:</label>
+                <input type="text" class="form-control" id="clientName" name="clientName" required />
+            </div>
+        </div>
     </div>
-
-    <div>
-        <label for="clientName">Client Name:</label>
-        <input type="text" id="cardNumber" name="cardNumber" required />
-    </div>
-
     <button type="submit" class="btn btn-primary">Process Payment</button>
 </form>
+
 @section scripts {
     <script>
         $(document).ready(function () {
-            // Supposons que vous ayez une balise div avec l'id "paymentConfirmationMessage" pour afficher le message de confirmation
             var confirmationMessageDiv = $("#paymentConfirmationMessage");
-
-            // Assurez-vous que la balise div est masquée initialement
             confirmationMessageDiv.hide();
 
-            // Associez une fonction à la soumission du formulaire
             $("form").submit(function (e) {
-                e.preventDefault(); // Empêche l'envoi du formulaire par défaut
-
-                // Effectuez une requête AJAX pour traiter le paiement
+                e.preventDefault();
                 $.ajax({
                     url: "/ShoppingCart/ProcessPayment",
                     method: "POST",
                     data: $(this).serialize(),
                     success: function (result) {
                         if (result.success) {
-                            // Affichez la fenêtre de confirmation ici
                             confirmationMessageDiv.text("Payment successful! Thank you.");
                             confirmationMessageDiv.show();
                         } else {
-                            // Affichez un message d'erreur si le paiement a échoué
                             alert("Payment failed. Please try again.");
                         }
                     },
                     error: function () {
-                        // Gérez les erreurs de la requête AJAX ici
                         alert("An error occurred. Please try again later.");
                     }
                 });
@@ -82,4 +246,3 @@
         });
     </script>
 }
-

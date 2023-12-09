@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MyNewProject.Models.Repositories;
 using System.Data;
 
@@ -25,6 +26,7 @@ namespace MyNewProject.Controllers
         public ActionResult Index()
         {
             var products = ProductRepository.GetAll();
+            ViewBag.Categories = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
             return View(products);
         }
 
@@ -96,7 +98,7 @@ namespace MyNewProject.Controllers
                 return View();
             }
         }
-        /*[HttpPost]
+		/*[HttpPost]
         public IActionResult AddToFavorites(int productId)
         {
             
@@ -112,5 +114,22 @@ namespace MyNewProject.Controllers
            
             return RedirectToAction("Details", "Product", new { id = productId });
         }*/
-    }
+		public ActionResult Search(string name, int? CategoryId)
+		{
+			var result = ProductRepository.GetAll();
+
+			if (!string.IsNullOrEmpty(name))
+			{
+				result = result.Where(p => p.Designation.Contains(name, StringComparison.OrdinalIgnoreCase));
+			}
+
+			if (CategoryId != null)
+			{
+				result = result.Where(p => p.CategoryId == CategoryId);
+			}
+
+			ViewBag.Categories = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
+			return View("Index", result);
+		}
+	}
 }

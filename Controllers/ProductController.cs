@@ -237,22 +237,26 @@ namespace WebApplication2.Controllers
 
 
         public ActionResult Search(string name, int? CategoryId)
-
         {
             var result = ProductRepository.GetAll();
+
             if (!string.IsNullOrEmpty(name))
-                result = ProductRepository.FindByName(name);
-            else
+            {
+                result = result.Where(p => p.Designation.Contains(name, StringComparison.OrdinalIgnoreCase));
+            }
+
             if (CategoryId != null)
-                result = ProductRepository.GetProductsByCategoryID(CategoryId);
+            {
+                result = result.Where(p => p.CategoryId == CategoryId);
+            }
+
             ViewBag.Categories = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
             return View("Index", result);
         }
 
 
-
     }
-    
+
 
 
 }

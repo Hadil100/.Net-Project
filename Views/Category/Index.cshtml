@@ -13,8 +13,8 @@
 
     .container {
         background-color: white;
-        padding: 20px;
-        margin-top: 20px;
+        padding: 0px;
+        margin-top: 10px;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
@@ -33,15 +33,25 @@
             background-color: #8B008B;
             color: white;
         }
+
+    .btn-research {
+        background-color: #8B008B; /* Dark pink color for the button */
+        color: white;
+        padding: 10px 20px; /* Adjust padding for better appearance */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .btn-research:hover {
+            background-color: #6a005f; /* Darken the color on hover if needed */
+        }
 </style>
 
-<div class="container">
-    <h1>Index</h1>
 
     <p>
-        <a asp-action="Create">Create New</a>
+    <a class="btn btn-research" asp-action="Create">Create New</a>
     </p>
-    <a asp-action="Index" asp-controller="Category"> All Categories</a>
 
     <table class="table">
         <thead>
@@ -86,4 +96,3 @@
             }
         </tbody>
     </table>
-</div>

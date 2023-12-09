@@ -61,11 +61,21 @@
 
 <form class="search-container" asp-action="Search" asp-controller="Product">
     <div class="d-flex align-items-center">
-        <input size="30" placeholder="Search by Category" type="search" name="name" class="mr-2" />
-        <select class="form-control mr-2" asp-items="ViewBag.Categories"></select>
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button>
+        <input size="30" placeholder="Search" type="search" name="name" class="mr-2" />
+        <select name="CategoryId" class="form-control mr-2">
+            <option value="">All Categories</option>
+            @foreach (var category in ViewBag.Categories)
+            {
+                <option value="@category.Value">@category.Text</option>
+            }
+        </select>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </div>
 </form>
+
+
+<!-- Your product list display code here -->
+
 
 
 
@@ -79,7 +89,7 @@
                 <h5><b>Designation : </b> @product.Designation</h5>
                 <h5><b>Price : </b>@product.Price</h5>
                 <h5><b>Quantity : </b> @product.Quantity</h5>
-                <h5><b>Category : </b> @product.CategoryId</h5>
+                <h5><b>Category : </b> @product.Category.CategoryName</h5>
             </div>
             <img class="card-img-top imageThumbnail" src="@photoPath" asp-append-version="true" />
             <div class="card-footer text-center">

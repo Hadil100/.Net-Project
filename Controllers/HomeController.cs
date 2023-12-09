@@ -21,6 +21,7 @@ namespace MyNewProject.Controllers
         public IActionResult Index()
         {
             var products = ProductRepository.GetAll();
+            ViewBag.Categories = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
             return View(products);
         }
 
@@ -35,17 +36,22 @@ namespace MyNewProject.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public ActionResult Search(string name, int? CategoryId)
+		public ActionResult Search(string name, int? CategoryId)
+		{
+			var result = ProductRepository.GetAll();
 
-        {
-            var result = ProductRepository.GetAll();
-            if (!string.IsNullOrEmpty(name))
-                result = ProductRepository.FindByName(name);
-            else
-            if (CategoryId != null)
-                result = ProductRepository.GetProductsByCategoryID(CategoryId);
-            ViewBag.Categories = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
-            return View("Index", result);
-        }
-    }
+			if (!string.IsNullOrEmpty(name))
+			{
+				result = result.Where(p => p.Designation.Contains(name, StringComparison.OrdinalIgnoreCase));
+			}
+
+			if (CategoryId != null)
+			{
+				result = result.Where(p => p.CategoryId == CategoryId);
+			}
+
+			ViewBag.Categories = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
+			return View("Index", result);
+		}
+	}
 }
