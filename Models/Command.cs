@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyNewProject.Models
 {
@@ -6,11 +7,12 @@ namespace MyNewProject.Models
     {
         public int CommandId { get; set; }
 
-        public string UserName { get; set; }
+        [ForeignKey("IdentityUser")]
+        public string UserId { get; set; }
         [Required]
         public float Total { get; set; }
 
-        [Required]
+       // [Required]
         public string status { get; set; }
 
       //  public ICollection<CartItem> CartItems { get; set;}

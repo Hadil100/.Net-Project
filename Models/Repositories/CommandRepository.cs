@@ -36,7 +36,7 @@
             if (c1 != null)
             {
                 // c1.CartItems = c.CartItems;
-                c1.UserName = c.UserName;
+                c1.UserId = c.UserId;
                 c1.Total = c.Total;
                 context.SaveChanges();
             }

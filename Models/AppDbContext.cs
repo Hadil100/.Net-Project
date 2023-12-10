@@ -13,5 +13,9 @@ namespace MyNewProject.Models
         public DbSet<Client> Clients { get; set; }
         public DbSet<Command> Commands { get; set; }
         public DbSet<CartItem> ShoppingCardItems { get; set; }
+
+        public DbSet<DetailsCommand> DetailsCommands { get; set; }
+
+        public DbSet<Favorite> Favorites { get; set;}
     }
 }

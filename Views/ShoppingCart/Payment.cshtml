@@ -168,7 +168,7 @@
     </div>
 </div>
 
-<form id="paymentForm" style="background-color: white">
+<form asp-action="ProcessPayment" method="post" id="paymentForm" style="background-color: white">
     <div class="col-12 mt-4">
         <div class="card p-3">
             <p class="mb-0 fw-bold h4">Payment Information</p>
@@ -187,6 +187,10 @@
             @foreach (var item in Model.CartItems)
             {
                 <tr>
+                    
+                    <input type="hidden" name="ProductId[]" value="@item.ProductId">
+                    <input type="hidden" name="Quantity[]" value="@item.Quantity">
+                   
                     <td>@item.ProductName</td>
                     <td>@(item.Price.ToString("C", new System.Globalization.CultureInfo("fr-TN")))</td>
                     <td>@item.Quantity</td>
@@ -198,6 +202,7 @@
             <tr>
                 <td colspan="3">Total</td>
                 <td>@(Model.TotalPrice.ToString("C", new System.Globalization.CultureInfo("fr-TN")))</td>
+                <input type="hidden" name="TotalPrice" value="@Model.TotalPrice">
             </tr>
         </tfoot>
     </table>
@@ -215,35 +220,7 @@
             </div>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary">Process Payment</button>
-</form>
 
-@section scripts {
-    <script>
-        $(document).ready(function () {
-            var confirmationMessageDiv = $("#paymentConfirmationMessage");
-            confirmationMessageDiv.hide();
-
-            $("form").submit(function (e) {
-                e.preventDefault();
-                $.ajax({
-                    url: "/ShoppingCart/ProcessPayment",
-                    method: "POST",
-                    data: $(this).serialize(),
-                    success: function (result) {
-                        if (result.success) {
-                            confirmationMessageDiv.text("Payment successful! Thank you.");
-                            confirmationMessageDiv.show();
-                        } else {
-                            alert("Payment failed. Please try again.");
-                        }
-                    },
-                    error: function () {
-                        alert("An error occurred. Please try again later.");
-                    }
-                });
-            });
-        });
     
-    </script>
-    }
+    <button type="submit" class="btn btn-primary" >Process Payment</button>
+</form>

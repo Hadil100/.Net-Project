@@ -78,7 +78,7 @@
 					   asp-route-price="@product.Price"
 					   asp-route-quantity="@product.Quantity"
 					   class="btn btn-primary m-1">Add to Cart</a>
-					<a asp-controller="User" asp-action="Favorites" class="btn btn-primary m-1">Like</a>
+					<a asp-controller="Favorite" asp-action="AddToFavorites" asp-route-productId="@product.Id" class="btn btn-primary m-1">Like</a>
 				</div>
 			</div>
 		}

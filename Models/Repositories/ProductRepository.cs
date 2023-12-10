@@ -25,6 +25,7 @@ namespace MyNewProject.Models.Repositories
             }
             return P;
         }
+
         public IEnumerable<Product> GetAll()
         {
             return context.Products;
