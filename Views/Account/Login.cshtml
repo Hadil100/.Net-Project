@@ -164,8 +164,15 @@
         <label for="password">Password</label>
         <input asp-for="Password" type="password" placeholder="Password" id="password">
 
+        
+         <div class="checkbox">
+        <label asp-for="RememberMe">
+        <input asp-for="RememberMe" /> @Html.DisplayNameFor(m => m.RememberMe)
+         </label>
+          </div>
+          
         <button>Log In</button>
-        </div>
+        
     </form>
 </body>
 </html>

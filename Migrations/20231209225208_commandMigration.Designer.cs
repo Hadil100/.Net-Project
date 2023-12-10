@@ -12,8 +12,8 @@ using MyNewProject.Models;
 namespace MyNewProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231209193204_Command")]
-    partial class Command
+    [Migration("20231209225208_commandMigration")]
+    partial class commandMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -231,9 +231,6 @@ namespace MyNewProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CommandId")
-                        .HasColumnType("int");
-
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
@@ -251,8 +248,6 @@ namespace MyNewProject.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CommandId");
 
                     b.ToTable("ShoppingCardItems");
                 });
@@ -315,6 +310,10 @@ namespace MyNewProject.Migrations
                         .HasColumnType("real");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -406,13 +405,6 @@ namespace MyNewProject.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MyNewProject.Models.CartItem", b =>
-                {
-                    b.HasOne("MyNewProject.Models.Command", null)
-                        .WithMany("ProductList")
-                        .HasForeignKey("CommandId");
-                });
-
             modelBuilder.Entity("MyNewProject.Models.Product", b =>
                 {
                     b.HasOne("MyNewProject.Models.Category", "Category")
@@ -427,11 +419,6 @@ namespace MyNewProject.Migrations
             modelBuilder.Entity("MyNewProject.Models.Category", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("MyNewProject.Models.Command", b =>
-                {
-                    b.Navigation("ProductList");
                 });
 #pragma warning restore 612, 618
         }

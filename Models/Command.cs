@@ -10,6 +10,9 @@ namespace MyNewProject.Models
         [Required]
         public float Total { get; set; }
 
-        public ICollection<CartItem> CartItems { get; set;}
+        [Required]
+        public string status { get; set; }
+
+      //  public ICollection<CartItem> CartItems { get; set;}
     }
 }

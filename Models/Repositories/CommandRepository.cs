@@ -17,7 +17,17 @@
         }
         public void Add(Command c)
         {
-            context.Commands.Add(c);
+            Command command= context.Commands.Find(c.CommandId);
+            if (command != null)
+            {
+                c.status = "Valide";
+            }
+            else
+            {
+                c.status = "Invalide";
+                context.Commands.Add(c);
+            }
+            
             context.SaveChanges();
         }
         public void Edit(Command c)
@@ -25,7 +35,8 @@
             Command c1 = context.Commands.Find(c.CommandId);
             if (c1 != null)
             {
-                c1.CartItems = c.CartItems;
+                // c1.CartItems = c.CartItems;
+                c1.UserName = c.UserName;
                 c1.Total = c.Total;
                 context.SaveChanges();
             }

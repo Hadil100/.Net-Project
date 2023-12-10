@@ -1,0 +1,102 @@
+﻿@model IEnumerable<MyNewProject.Models.Command>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    body {
+        background-color: #ffe6ff; /* Light pink color for the entire body */
+        height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        background-color: white;
+        padding: 0px;
+        margin-top: 10px;
+        margin-right: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .action-buttons a {
+        display: inline-block;
+        margin-right: 10px;
+        text-decoration: none;
+        padding: 5px 10px;
+        border: 1px solid #8B008B;
+        color: #8B008B;
+        border-radius: 5px;
+    }
+
+        .action-buttons a:hover {
+            background-color: #8B008B;
+            color: white;
+        }
+
+    .btn-research {
+        background-color: #8B008B; /* Dark pink color for the button */
+        color: white;
+        padding: 10px 20px; /* Adjust padding for better appearance */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .btn-research:hover {
+            background-color: #6a005f; /* Darken the color on hover if needed */
+        }
+</style>
+<h2>Commands of Our Clients</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                 
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Total)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.status)
+                    </td>
+
+                    <td class="action-buttons">
+                        <a asp-action="Valide" asp-route-commandId="@item.CommandId"> Validate </a>
+                        
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="3">
+                    No category found
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

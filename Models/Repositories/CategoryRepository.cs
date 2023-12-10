@@ -19,9 +19,24 @@ namespace MyNewProject.Models.Repositories
         }
         public void Add(Category cat)
         {
-            context.Categories.Add(cat);
-            context.SaveChanges();
+            // Vérifiez si une catégorie avec le même nom existe déjà
+            var existingCategory = context.Categories.FirstOrDefault(c => c.CategoryName == cat.CategoryName);
+
+            if (existingCategory == null)
+            {
+                // Aucune catégorie avec le même nom n'existe, vous pouvez l'ajouter
+                context.Categories.Add(cat);
+                context.SaveChanges();
+            }
+            else
+            {
+                // Une catégorie avec le même nom existe déjà, vous pouvez gérer cela selon vos besoins
+                // Par exemple, déclencher une exception, mettre à jour la catégorie existante, etc.
+                // Dans cet exemple, nous lançons une exception, mais vous pouvez adapter cela à vos besoins.
+                throw new InvalidOperationException("Une catégorie avec le même nom existe déjà.");
+            }
         }
+
         public void Edit(Category cat)
         {
             Category C1 = context.Categories.Find(cat.CategoryId);

@@ -1,14 +1,25 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using MyNewProject.Migrations;
+using MyNewProject.Models.Repositories;
+using MyNewProject.Models;
 namespace MyNewProject.Controllers
 {
     public class CommandController : Controller
     {
+        private readonly ICommandRepository commandRepository;
+        private readonly IWebHostEnvironment hostingEnvironment;
+        public CommandController(ICommandRepository commandRepository, IWebHostEnvironment hostingEnvironment)
+        {
+            
+            this.hostingEnvironment = hostingEnvironment;
+            this.commandRepository = commandRepository;
+        }
         // GET: CommandController
         public ActionResult Index()
         {
-            return View();
+            var commands = commandRepository.GetAll();
+            return View(commands);
         }
 
         // GET: CommandController/Details/5
@@ -78,6 +89,14 @@ namespace MyNewProject.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult Valide(int commandId)
+        {
+            Command command = commandRepository.GetById(commandId);
+            command.status = "Valide";
+            commandRepository.Add(command);
+            return RedirectToAction("Index");
         }
     }
 }
