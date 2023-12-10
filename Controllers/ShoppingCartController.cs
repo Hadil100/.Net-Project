@@ -14,12 +14,14 @@ public class ShoppingCartController : Controller
     private readonly ICommandRepository commandRepository;
     private readonly IDetailsRepository detailsRepository;
     private readonly UserManager<IdentityUser> usermanager;
-    public ShoppingCartController(IShoppingRepository shoppingRepository, ICommandRepository commandRepository, UserManager<IdentityUser> usermanager, IDetailsRepository detailsRepository)
+    private readonly IProductRepository productRepository;
+    public ShoppingCartController(IShoppingRepository shoppingRepository, ICommandRepository commandRepository, UserManager<IdentityUser> usermanager, IDetailsRepository detailsRepository, IProductRepository productRepository)
     {
         this.shoppingRepository = shoppingRepository;
         this.commandRepository = commandRepository;
         this.usermanager = usermanager;
         this.detailsRepository = detailsRepository;
+        this.productRepository = productRepository;
     }
 
     public IActionResult Index()
@@ -90,16 +92,20 @@ public IActionResult ProcessPayment(IFormCollection collection)
                 CommandId = command.CommandId,
                 Quantity = int.Parse(Quantity[i]),
                 ProductId = int.Parse(ProductId[i]),
+                Product = productRepository.Get(int.Parse(ProductId[i])),
 
             };
             detailsRepository.Add(Detail);  
         }
         shoppingRepository.ClearCart();
-        return RedirectToAction("Index");
+      
+        return RedirectToAction("PaymentConfirmation");
     }
 
     public IActionResult PaymentConfirmation()
     {
         return View();
     }
+
+
 }

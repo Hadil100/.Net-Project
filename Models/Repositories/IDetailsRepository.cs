@@ -7,5 +7,7 @@
 		void Add(DetailsCommand c);
 		void Edit(DetailsCommand c);
 		void Delete(DetailsCommand c);
-	}
+		DetailsCommand GetByCommandId(int CommandId);
+
+    }
 }

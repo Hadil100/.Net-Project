@@ -10,33 +10,36 @@
         }
 
         public void AddItem(string productPath, int productId, string productName, float price, int quantity)
-        {
-            var existingItem = context.ShoppingCardItems.FirstOrDefault(item => item.ProductId == productId);
-
-            if (existingItem != null)
+        { if (quantity > 0)
             {
-                existingItem.Quantity += 1;
-            }
-            else
-            {
-                // Vous devez ajouter l'élément au contexte, puis le sauvegarder dans la base de données
-                var newItem = new CartItem
-                {   ProductPath = productPath,
-                    ProductId = productId,
-                    ProductName = productName,
-                    Price = price,
-                    Quantity = 1
-                };
-                context.ShoppingCardItems.Add(newItem);
-            }
-			var product = context.Products.FirstOrDefault(p => p.Id == productId);
-			if (product != null && product.Quantity>0)
-			{
-				product.Quantity -= 1;
-			}
+                var existingItem = context.ShoppingCardItems.FirstOrDefault(item => item.ProductId == productId);
 
-			// Sauvegardez les modifications dans la base de données
-			context.SaveChanges();
+                if (existingItem != null)
+                {
+                    existingItem.Quantity += 1;
+                }
+                else
+                {
+                    // Vous devez ajouter l'élément au contexte, puis le sauvegarder dans la base de données
+                    var newItem = new CartItem
+                    {
+                        ProductPath = productPath,
+                        ProductId = productId,
+                        ProductName = productName,
+                        Price = price,
+                        Quantity = 1
+                    };
+                    context.ShoppingCardItems.Add(newItem);
+                }
+                var product = context.Products.FirstOrDefault(p => p.Id == productId);
+                if (product != null && product.Quantity > 0)
+                {
+                    product.Quantity -= 1;
+                }
+
+                // Sauvegardez les modifications dans la base de données
+                context.SaveChanges();
+            }
         }
 
         public void RemoveItem(int productId)

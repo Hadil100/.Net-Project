@@ -44,5 +44,11 @@
 				context.SaveChanges();
 			}
 		}
-	}
+
+        public DetailsCommand GetByCommandId(int CommandId)
+        {
+            return context.DetailsCommands.FirstOrDefault(dc => dc.CommandId == CommandId);
+        }
+
+    }
 }

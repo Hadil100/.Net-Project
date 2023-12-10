@@ -1,0 +1,47 @@
+﻿@model MyNewProject.Models.DetailsCommand
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Details</title>
+    <!-- Include any necessary stylesheets or scripts here -->
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Command Details</h2>
+
+                <!-- Display details of the command -->
+                <div>
+                    <strong>Command ID:</strong> @Model.CommandId
+                </div>
+                <div>
+                    <strong>Quantity:</strong> @Model.Quantity
+                </div>
+                <div>
+                    <strong>Product ID:</strong> @Model.ProductId
+                </div>
+
+                <div>
+                    <strong>Product Name:</strong> @Model.Product?.Designation
+                </div>
+                <div>
+                    <strong>Quantity:</strong> @Model.Product?.Quantity
+                </div>
+
+               
+                <!-- Add more details as needed -->
+                <!-- Add a button or link to navigate back to the previous page or any other relevant page -->
+                <a asp-action="Index" class="btn btn-primary">Back to Previous Page</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include any necessary scripts here -->
+</body>
+
+</html>

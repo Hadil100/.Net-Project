@@ -1,11 +1,15 @@
-﻿namespace MyNewProject.Models.Repositories
+﻿using Microsoft.AspNetCore.Http;
+
+namespace MyNewProject.Models.Repositories
 {
     public class CommandRepository : ICommandRepository
     {
         readonly AppDbContext context;
-        public CommandRepository(AppDbContext context)
+        private readonly IHttpContextAccessor httpContextAccessor;
+        public CommandRepository(AppDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             this.context = context;
+            this.httpContextAccessor = httpContextAccessor;
         }
         public IList<Command> GetAll()
         {
@@ -17,6 +21,7 @@
         }
         public void Add(Command c)
         {
+            string userName = httpContextAccessor.HttpContext.User.Identity.Name;
             Command command= context.Commands.Find(c.CommandId);
             if (command != null)
             {
@@ -25,6 +30,7 @@
             else
             {
                 c.status = "Invalide";
+                c.UserId = userName; 
                 context.Commands.Add(c);
             }
             
