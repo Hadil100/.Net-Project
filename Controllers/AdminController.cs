@@ -133,12 +133,14 @@ namespace MyNewProject.Controllers
 }
             else
             {
-                role.Name = model.RoleName ;
+                role.Name = model.RoleName;
 
                 // Update the Role using UpdateAsync
                 var result = await roleManager.UpdateAsync(role);
+                if
+                (result.Succeeded)
 
-                if(result.Succeeded) {
+                {
 
                     return RedirectToAction("ListRoles");
                 
