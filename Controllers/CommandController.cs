@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MyNewProject.Migrations;
 using MyNewProject.Models.Repositories;
 using MyNewProject.Models;
 namespace MyNewProject.Controllers

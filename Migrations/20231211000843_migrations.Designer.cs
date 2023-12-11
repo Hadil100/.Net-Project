@@ -12,8 +12,8 @@ using MyNewProject.Models;
 namespace MyNewProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231209182925_nouveau")]
-    partial class nouveau
+    [Migration("20231211000843_migrations")]
+    partial class migrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,27 @@ namespace MyNewProject.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Favorite", b =>
+                {
+                    b.Property<int>("FavoriteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FavoriteId"));
+
+                    b.Property<int>("NumberLike")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("FavoriteId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Favorites");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -309,9 +330,41 @@ namespace MyNewProject.Migrations
                     b.Property<float>("Total")
                         .HasColumnType("real");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("CommandId");
 
                     b.ToTable("Commands");
+                });
+
+            modelBuilder.Entity("MyNewProject.Models.DetailsCommand", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CommandId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("DetailsCommands");
                 });
 
             modelBuilder.Entity("MyNewProject.Models.Product", b =>
@@ -323,9 +376,6 @@ namespace MyNewProject.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CommandId")
                         .HasColumnType("int");
 
                     b.Property<string>("Designation")
@@ -346,9 +396,18 @@ namespace MyNewProject.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("CommandId");
-
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Favorite", b =>
+                {
+                    b.HasOne("MyNewProject.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -402,6 +461,17 @@ namespace MyNewProject.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MyNewProject.Models.DetailsCommand", b =>
+                {
+                    b.HasOne("MyNewProject.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("MyNewProject.Models.Product", b =>
                 {
                     b.HasOne("MyNewProject.Models.Category", "Category")
@@ -410,21 +480,12 @@ namespace MyNewProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MyNewProject.Models.Command", null)
-                        .WithMany("ProductList")
-                        .HasForeignKey("CommandId");
-
                     b.Navigation("Category");
                 });
 
             modelBuilder.Entity("MyNewProject.Models.Category", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("MyNewProject.Models.Command", b =>
-                {
-                    b.Navigation("ProductList");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MyNewProject.Models.Repositories;
 using System.Data;
+using System.Security.Claims;
+using MyNewProject.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Diagnostics;
 
 namespace MyNewProject.Controllers
 {
@@ -12,11 +16,17 @@ namespace MyNewProject.Controllers
     {
         private readonly IProductRepository ProductRepository;
         private readonly ICategoryRepository CategoryRepository;
-        public UserController(IProductRepository productRepository, ICategoryRepository categoryRepository)
+        private readonly ICommandRepository commandRepository;
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly IHttpContextAccessor httpContextAccessor;
+        public UserController(IProductRepository productRepository, ICategoryRepository categoryRepository, ICommandRepository commandRepository, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
-            
+
             ProductRepository = productRepository;
-            this.CategoryRepository = categoryRepository;
+            CategoryRepository = categoryRepository;
+            this.commandRepository = commandRepository;
+            this.userManager = userManager;
+            this.httpContextAccessor = httpContextAccessor;
         }
        
         /*private readonly IFavoritesRepository _favoritesRepository;*/
@@ -131,5 +141,24 @@ namespace MyNewProject.Controllers
 			ViewBag.Categories = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
 			return View("Index", result);
 		}
-	}
+
+
+        public ActionResult CommandUser()
+        {
+            // Get the user ID of the currently logged-in user
+            string userId = httpContextAccessor.HttpContext.User.Identity.Name;
+            Debug.WriteLine($"User ID: {userId}");
+
+            // Retrieve commands for the current user
+            IEnumerable<Command> commands = commandRepository.GetCommandsByUserId(userId);
+
+            // Output the count of commands for debugging
+            Debug.WriteLine($"Number of Commands: {commands.Count()}");
+
+            return View(commands);
+        }
+
+
+
+    }
 }
