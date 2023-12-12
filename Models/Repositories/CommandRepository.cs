@@ -11,6 +11,10 @@ namespace MyNewProject.Models.Repositories
             this.context = context;
             this.httpContextAccessor = httpContextAccessor;
         }
+        public IEnumerable<Command> GetCommandsByUserId(string userId)
+        {
+            return context.Commands.Where(c => c.UserId == userId);
+        }
         public IList<Command> GetAll()
         {
             return context.Commands.OrderBy(c => c.CommandId).ToList();

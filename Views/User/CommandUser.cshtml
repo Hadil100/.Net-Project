@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Command>
+
+<style>
+    body {
+        background-color: #ffe6ff; /* Light pink color for the entire body */
+        height: 100vh;
+        margin: 0;
+    }
+
+    label.control-label {
+        font-weight: bold;
+    }
+
+    .custom-file-input {
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        margin-right: 10px;
+    }
+</style>
+
+<h2>Your Command Details</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Command Number</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+        @{
+                var x = 0;
+            }
+            @foreach (var item in Model)
+            {
+                
+                <tr>
+                    <td>@(x+1)</td>
+                    <td>@item.status</td>
+                    <td>@((item.Total).ToString("C", new System.Globalization.CultureInfo("fr-TN")))</td>
+                </tr>
+                x++;
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No Commands</p>
+}
+
+<button class="btn btn-research" onclick="location.href='@Url.Action("Index", "User")'">Continue Shopping</button>
