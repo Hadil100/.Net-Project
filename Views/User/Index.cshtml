@@ -46,7 +46,7 @@
 </style>
 
 <div class="text-center">
-	<h1 class="display-4" style="font-style: italic; color: #8B008B;">Welcome to HC</h1>
+	<h1 class="display-4" style="font-style: italic; color: #8B008B;">Welcome to FashionFiesta !</h1>
 </div>
 
 <form class="search-container" asp-action="Search" asp-controller="User">
@@ -72,8 +72,8 @@
 			var photoPath = "~/images/" + (product.Image ?? "noimage.jpg");
 			<div class="card m-3" style="min-width: 18rem; max-width:30.5%;">
 				<div class="card-header">
-					<h5><b>Designation : </b> @product.Designation</h5>
-					<h5><b>Price : </b>@product.Price</h5>
+					<h5><b> @product.Designation</b> </h5>
+					<h5><b>Price : </b>@product.Price TND</h5>
 					<h5><b>Quantity : </b> @product.Quantity</h5>
 					<h5><b>Category : </b> @product.Category.CategoryName</h5>
 					<span class="like-count" id="likeCount_@product.Id">Likes: 0</span>

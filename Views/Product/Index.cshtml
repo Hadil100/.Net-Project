@@ -20,7 +20,7 @@
 <button class="button-33" role="button">Button 33</button>
     <!-- HTML ! -->
     <button class="button-62" role="button" > Button 62</button >
-    /* CSS */
+   
     .button-62 {
         background: linear-gradient(to bottom right, #EF4765, #FF9A5A);
         border: 0;
@@ -74,7 +74,6 @@
 </form>
 
 
-<!-- Your product list display code here -->
 
 
 
@@ -86,8 +85,8 @@
         var photoPath = "~/images/" + (product.Image ?? "noimage.jpg");
         <div class="card m-3" style="min-width: 18rem; max-width:30.5%;">
             <div class="card-header">
-                <h5><b>Designation : </b> @product.Designation</h5>
-                <h5><b>Price : </b>@product.Price</h5>
+                <h5><b> @product.Designation</b> </h5>
+                <h5><b>Price : </b>@product.Price TND</h5>
                 <h5><b>Quantity : </b> @product.Quantity</h5>
                 <h5><b>Category : </b> @product.Category.CategoryName</h5>
             </div>

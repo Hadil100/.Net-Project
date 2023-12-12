@@ -5,19 +5,19 @@
 <link rel="stylesheet" href="~/css/Research.css" asp-append-version="true" />
 <style>
     body {
-        background-color: #ffe6ff; /* Light pink color for the entire body */
+        background-color: #ffe6ff; 
         height: 100vh;
         margin: 0;
     }
 
     .text-center {
-        color: white; /* Set text color to be visible against the background */
+        color: white; 
     }
 
     .search-container {
         background-color: rgba(255, 255, 255, 0);
-        padding: 20px; /* Add padding for better visibility */
-        border-radius: 10px; /* Add border-radius for a rounded appearance */
+        padding: 20px; 
+        border-radius: 10px; 
     }
 
     .product-container {
@@ -28,17 +28,24 @@
     }
 
         .product-container h2 {
-            color: #8B008B; /* Very dark pink color for the h2 */
+            color: #8B008B; 
+        }
+
+        .product-container h6 {
+            color: #8B008B; 
+            text-align: center; 
+            font-style: italic; 
+
         }
 
     .btn-research {
-        background-color: #8B008B; /* Dark pink color for the button */
+        background-color: #8B008B; 
         color: white; 
     }
 </style>
 
 <div class="text-center">
-    <h1 class="display-4" style="font-style: italic; color: #8B008B;">Welcome to HC</h1>
+    <h1 class="display-4" style="font-style: italic; color: #8B008B;">Welcome to FashionFiesta !</h1>
 </div>
 
 <form class="search-container" asp-action="Search" asp-controller="Home">
@@ -60,6 +67,7 @@
 
 <div class="product-container">
     <h2 class="text-center">Have a Look at our Products</h2>
+    <h6>If you want to buy a product, you have to create an account first !</h6>
 
     <div class="card-group">
         @foreach (var product in Model)
@@ -67,8 +75,8 @@
             var photoPath = "~/images/" + (product.Image ?? "noimage.jpg");
             <div class="card m-3" style="min-width: 18rem; max-width:30.5%;">
                 <div class="card-header">
-                    <h5><b>Designation : </b> @product.Designation</h5>
-                    <h5><b>Price : </b>@product.Price</h5>
+                    <h5><b> @product.Designation</b> </h5>
+                    <h5><b>Price : </b>@product.Price TND</h5>
                     <h5><b>Category : </b> @product.Category.CategoryName</h5>
 
                 </div>

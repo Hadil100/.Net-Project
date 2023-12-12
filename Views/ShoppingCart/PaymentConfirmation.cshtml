@@ -6,33 +6,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Confirmation</title>
-    <!-- Add your CSS styles or include a stylesheet link here -->
     <style>
-        /* Define a class for the green check mark */
         .check-mark {
             color: green;
-            font-size: 24px; /* Adjust the size as needed */
-            margin-right: 5px; /* Add some space to the right of the check mark */
+            font-size: 24px; 
+            margin-right: 5px; 
         }
 
         body {
-            background-color: #ffe6ff; /* Light pink color for the entire body */
+            background-color: #ffe6ff; 
             height: 100vh;
             margin: 0;
         }
 
-        /* Style the "Continue Shopping" button */
+        /
         .btn-research {
-            background-color: #4CAF50; /* Green background color for the button */
-            color: white; /* White text color for the button */
-            padding: 10px 20px; /* Adjust padding as needed */
+            background-color: #8B008B; 
+            color: white; 
+            padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
 
             .btn-research:hover {
-                background-color: #45a049; /* Darker green color on hover */
+                background-color: #8B008B; 
             }
     </style>
 </head>
@@ -44,20 +42,16 @@
                 <h2 class="card-title">Payment Confirmation</h2>
                 <p class="card-text">Thank you for your purchase!</p>
 
-                <!-- Add more details as needed -->
 
                 <p class="card-text mt-3">
                     <span class="check-mark">&#10004;</span> Your payment was successful. We appreciate your business.
                 </p>
 
-                <!-- Add a button or link to navigate back to the home page or any other relevant page -->
                 <button class="btn btn-research" onclick="location.href='@Url.Action("Index", "User")'">Continue Shopping</button>
 
             </div>
         </div>
     </div>
-
-    <!-- Add your JavaScript scripts or include script tags here if needed -->
 </body>
 
 </html>
