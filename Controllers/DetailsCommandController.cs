@@ -92,7 +92,7 @@ namespace MyNewProject.Controllers
         {
             DetailsCommand detailCommand = detailRepository.GetByCommandId(commandId);
 
-            detailCommand.Product = productRepository.Get(detailCommand.ProductId);
+          
   
            
             return View("ViewDetails", detailCommand);

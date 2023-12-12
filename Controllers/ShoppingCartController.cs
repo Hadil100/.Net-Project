@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyNewProject.Models;
 using MyNewProject.Models.Repositories;
@@ -85,17 +86,19 @@ public IActionResult ProcessPayment(IFormCollection collection)
 
         };
         commandRepository.Add(command);
-        for (var i= 0;i< ProductId.Count();i++)
+		
+		for (var i= 0;i< ProductId.Count();i++)
         {
             var Detail = new DetailsCommand
             {
                 CommandId = command.CommandId,
                 Quantity = int.Parse(Quantity[i]),
                 ProductId = int.Parse(ProductId[i]),
-                Product = productRepository.Get(int.Parse(ProductId[i])),
+                
 
             };
-            detailsRepository.Add(Detail);  
+			
+			detailsRepository.Add(Detail);  
         }
         shoppingRepository.ClearCart();
       

@@ -10,6 +10,14 @@
 		margin: 0;
 	}
 
+	
+	.like-count {
+		font-size: 14px; /* Ajustez la taille de la police selon vos besoins */
+		font-weight: bold;
+		margin-top: 5px; /* Ajustez la marge selon vos besoins */
+	}
+
+
 	.text-center {
 		color: white; /* Set text color to be visible against the background */
 	}
@@ -68,6 +76,7 @@
 					<h5><b>Price : </b>@product.Price</h5>
 					<h5><b>Quantity : </b> @product.Quantity</h5>
 					<h5><b>Category : </b> @product.Category.CategoryName</h5>
+					<span class="like-count" id="likeCount_@product.Id">Likes: 0</span>
 				</div>
 				<img class="card-img-top imageThumbnail" src="@photoPath" asp-append-version="true" />
 				<div class="card-footer text-center">
@@ -77,10 +86,37 @@
 					   asp-route-productName="@product.Designation"
 					   asp-route-price="@product.Price"
 					   asp-route-quantity="@product.Quantity"
+						   
 					   class="btn btn-primary m-1">Add to Cart</a>
-					<a asp-controller="Favorite" asp-action="AddToFavorites" asp-route-productId="@product.Id" class="btn btn-primary m-1">Like</a>
+
+					<a href="javascript:void(0);" onclick="likeProduct(@product.Id)" class="btn btn-primary m-1">Like</a>
+
 				</div>
+
 			</div>
 		}
 	</div>
 </div>
+
+<!-- Assurez-vous d'inclure jQuery dans votre page -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+	// Fonction pour envoyer une requête AJAX et mettre à jour le nombre de likes
+	function likeProduct(productId) {
+		// Simuler une requête AJAX (remplacez cela par votre logique réelle)
+		// Vous pouvez également effectuer une véritable requête AJAX vers le serveur ici
+		var newLikeCount = parseInt($('#likeCount_' + productId).text().split(': ')[1]) + 1;
+		$('#likeCount_' + productId).text('Likes: ' + newLikeCount);
+	}
+
+	// Attacher un gestionnaire d'événements au bouton "Like"
+	$(document).ready(function () {
+		$('.like-button').on('click', function (event) {
+			event.preventDefault();
+			var productId = $(this).data('product-id');
+			likeProduct(productId);
+		});
+	});
+</script>
+

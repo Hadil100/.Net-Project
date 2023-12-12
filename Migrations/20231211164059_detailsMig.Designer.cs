@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyNewProject.Models;
 
@@ -11,9 +12,11 @@ using MyNewProject.Models;
 namespace MyNewProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231211164059_detailsMig")]
+    partial class detailsMig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,6 +40,8 @@ namespace MyNewProject.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("FavoriteId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Favorites");
                 });
@@ -349,9 +354,6 @@ namespace MyNewProject.Migrations
                     b.Property<int>("CommandId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -382,6 +384,9 @@ namespace MyNewProject.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
+                    b.Property<int?>("Product")
+                        .HasColumnType("int");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -389,7 +394,20 @@ namespace MyNewProject.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("Product");
+
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Favorite", b =>
+                {
+                    b.HasOne("MyNewProject.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -451,10 +469,19 @@ namespace MyNewProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MyNewProject.Models.DetailsCommand", null)
+                        .WithMany("Products")
+                        .HasForeignKey("Product");
+
                     b.Navigation("Category");
                 });
 
             modelBuilder.Entity("MyNewProject.Models.Category", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("MyNewProject.Models.DetailsCommand", b =>
                 {
                     b.Navigation("Products");
                 });

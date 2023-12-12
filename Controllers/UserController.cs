@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MyNewProject.Models;
 using MyNewProject.Models.Repositories;
 using System.Data;
 
@@ -12,11 +13,13 @@ namespace MyNewProject.Controllers
     {
         private readonly IProductRepository ProductRepository;
         private readonly ICategoryRepository CategoryRepository;
+     
         public UserController(IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
             
-            ProductRepository = productRepository;
+            this.ProductRepository = productRepository;
             this.CategoryRepository = categoryRepository;
+           
         }
        
         /*private readonly IFavoritesRepository _favoritesRepository;*/
@@ -131,5 +134,7 @@ namespace MyNewProject.Controllers
 			ViewBag.Categories = new SelectList(CategoryRepository.GetAll(), "CategoryId", "CategoryName");
 			return View("Index", result);
 		}
-	}
+
+
+    }
 }

@@ -30,7 +30,7 @@
 			{
 				// c1.CartItems = c.CartItems;
 				c1.CommandId = c.CommandId;
-				c1.ProductId = c.ProductId;
+				//c1.ProductId = c.ProductId;
 				c1.Quantity = c1.Quantity;
 				context.SaveChanges();
 			}

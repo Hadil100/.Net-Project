@@ -16,6 +16,6 @@ namespace MyNewProject.Models
 
         public DbSet<DetailsCommand> DetailsCommands { get; set; }
 
-        public DbSet<Favorite> Favorites { get; set;}
+        
     }
 }
