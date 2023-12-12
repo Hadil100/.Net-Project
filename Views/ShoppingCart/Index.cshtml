@@ -1,13 +1,13 @@
 ﻿@model MyNewProject.ViewModels.CartViewModel
 <style>
     body {
-        background-color: #ffe6ff; /* Light pink color for the entire body */
+        background-color: #ffe6ff; 
         height: 100vh;
         margin: 0;
     }
 
     h2 {
-        color: #8B008B; /* Dark pink color for the heading */
+        color: #8B008B; 
         font-style: italic;
     }
 
@@ -15,7 +15,7 @@
         width: 100%;
         border-collapse: collapse;
         margin-top: 20px;
-        background-color: white; /* Add this line to set the background color of the table */
+        background-color: white; 
     }
 
     th, td {
@@ -25,43 +25,42 @@
     }
 
     th {
-        background-color: #8B008B; /* Dark pink color for header background */
+        background-color: #8B008B; 
         color: black;
     }
 
     tbody tr:nth-child(even) {
-        background-color: #f2f2f2; /* Light gray background for even rows */
+        background-color: #f2f2f2; 
     }
 
     tfoot {
-        background-color: #8B008B; /* Dark pink color for footer background */
+        background-color: #8B008B; 
         color: white;
     }
 
     p {
-        color: #8B008B; /* Dark pink color for the empty cart message */
+        color: #8B008B; 
     }
 
     a {
-        color: #8B008B; /* Dark pink color for links */
+        color: #8B008B; 
         text-decoration: none;
     }
 
         a:hover {
-            text-decoration: underline; /* Underline links on hover */
-        }
+            text-decoration: underline; 
 
     .btn-research {
-        background-color: #8B008B; /* Dark pink color for the button */
+        background-color: #8B008B; 
         color: white;
-        padding: 10px 20px; /* Adjust padding for better appearance */
+        padding: 10px 20px; 
         border: none;
         border-radius: 5px;
         cursor: pointer;
     }
 
         .btn-research:hover {
-            background-color: #6a005f; /* Darken the color on hover if needed */
+            background-color: #6a005f; 
         }
 
 </style>
@@ -99,7 +98,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="4">Total:</td> <!-- Empty cell to match structure -->
+                <td colspan="4">Total:</td> 
                 <td colspan="2"> @(Model.TotalPrice.ToString("C", new System.Globalization.CultureInfo("fr-TN")))</td>
             </tr>
         </tfoot>

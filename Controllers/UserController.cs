@@ -145,14 +145,14 @@ namespace MyNewProject.Controllers
 
         public ActionResult CommandUser()
         {
-            // Get the user ID of the currently logged-in user
+            
             string userId = httpContextAccessor.HttpContext.User.Identity.Name;
             Debug.WriteLine($"User ID: {userId}");
 
-            // Retrieve commands for the current user
+
             IEnumerable<Command> commands = commandRepository.GetCommandsByUserId(userId);
 
-            // Output the count of commands for debugging
+         
             Debug.WriteLine($"Number of Commands: {commands.Count()}");
 
             return View(commands);
